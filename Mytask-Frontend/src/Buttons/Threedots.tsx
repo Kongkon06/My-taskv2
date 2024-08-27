@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState,useSetRecoilState } from "recoil";
 import { currentid, isOpen } from "../Atoms/Atoms";
 import { Info } from "../Pages/Info"; 
 import { Editpanel } from "../Pages/Editpanel";
@@ -8,7 +8,7 @@ export function Threedots({ parentId }: { parentId?: number }) {
     const [isMultiDropdownOpen, setIsMultiDropdownOpen] = useState(false);
     const [isDoubleDropdownOpen, setIsDoubleDropdownOpen] = useRecoilState(isOpen('Editpanel'));
     const [ eso ,set] =  useRecoilState(isOpen('Addbutton'))
-    const [curr, setCurr] = useRecoilState(currentid);
+    const  setCurr = useSetRecoilState(currentid);
     console.log(parentId);
   
     const toggleMultiDropdown = () => {

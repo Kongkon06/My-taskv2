@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { todoatom, isOpen, currentid } from "../Atoms/Atoms";
 import { DATABASE_URL } from "../config";
 export function Editpanel({ id }: { id: number }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [todo, setTodo] = useRecoilState(todoatom);
-    const [Open, setIsOpen] = useRecoilState(isOpen('Editpanel'));
-    const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
+    const setTodo = useSetRecoilState(todoatom);
+    const  setIsOpen = useSetRecoilState(isOpen('Editpanel'));
+    const setcurent = useSetRecoilState(currentid); // Get the current ID from Recoil
     console.log("inside editpanel")
     const resolvedParentId = id;
 

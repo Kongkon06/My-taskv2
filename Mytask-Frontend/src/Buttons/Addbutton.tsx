@@ -1,10 +1,10 @@
 import { Info } from "../Pages/Info";
-import { useRecoilState } from "recoil";
+import { useRecoilState,useSetRecoilState } from "recoil";
 import { currentid, isOpen } from "../Atoms/Atoms";
 
 export function Addbutton({parentId}:{parentId?:number}) {
     const [Open, setIsOpen] = useRecoilState(isOpen('Addbutton'));
-    const [curr,setCurr] = useRecoilState(currentid);
+    const setCurr = useSetRecoilState(currentid);
     console.log("inside add")
     const toggleDropdown = () => {
         setIsOpen(!Open);

@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import { useState,useRef } from 'react';
 import { Dropdown } from './Dropdown';
 
 export default function Hook({fn,name}:{fn:()=>void,name:string}) {

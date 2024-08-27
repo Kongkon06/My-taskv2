@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { todoatom, isOpen, currentid, editpan } from "../Atoms/Atoms";
+import { useRecoilState } from "recoil";
+import { todoatom, isOpen, currentid } from "../Atoms/Atoms";
 
 export function Editpanel({ id }: { id: number }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [todo, setTodo] = useRecoilState(todoatom);
-    const [Open, setIsOpen] = useRecoilState(editpan);
+    const [Open, setIsOpen] = useRecoilState(isOpen('Editpanel'));
     const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
     console.log("inside editpanel")
     const resolvedParentId = id;
@@ -26,7 +26,7 @@ export function Editpanel({ id }: { id: number }) {
             const res = await axios.post('http://localhost:8787/api/v2/Todo', {
                 name: name,
                 description: description,
-                parentId: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here
+                id: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here
             });
             console.log("Response from server:", res);
     
@@ -47,7 +47,7 @@ export function Editpanel({ id }: { id: number }) {
         <div className="relative w-screen h-screen flex justify-center items-center">
             <div className="absolute inset-0 bg-gray-800 opacity-50 z-10 text-sm"></div> {/* Blurred background overlay */}
             <div className="relative z-20 w-11/12 sm:w-3/5 md:w-2/5 lg:w-1/5 h-auto pb-2 rounded-md bg-white shadow-xl">
-                <div>Edit panel</div>
+                <div className="w-full pt-2 flex justify-center text-black">Edit panel</div>
                 <div className="font-semibold font-dm-sans p-4">
                     <label className="block mb-2 text-gray-700 text-sm">Edit</label>
                     <input
@@ -57,7 +57,7 @@ export function Editpanel({ id }: { id: number }) {
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
-                    <label className="block my-2 text-gray-700">Description</label>
+                    <label className="block my-2 text-gray-700 text-sm">Description</label>
                     <input
                         className="border border-slate-900 text-slate-900 text-sm rounded-lg block w-full p-2.5 focus:outline-none dark:text-white dark:bg-slate-900 dark:placeholder-slate-200 focus:text-black focus:bg-slate-200"
                         placeholder="Go to gym.."

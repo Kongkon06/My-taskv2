@@ -36,7 +36,7 @@ Todo.post('/Todo/update',async (c) => {
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate());
-        const update=prisma.todo.update({
+        const update=await prisma.todo.update({
             where:{
                 id:body.id
             },
@@ -47,7 +47,7 @@ Todo.post('/Todo/update',async (c) => {
         if(!update){
            return c.json({msg:"done"});
         }else{
-            return c.json({msg:"Error in database"});
+            return c.json({msg:"Error in database",update});
         }
 
     }catch(e){

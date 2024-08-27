@@ -3,7 +3,7 @@ import { atom,atomFamily } from 'recoil';
 interface Todo {
   id: number;
   name: string;
-  stat: boolean;
+  status: boolean;
   parentId:number;
   description: string;
 }
@@ -19,7 +19,7 @@ export const childatom = atom<Todo[]>({
     key:"childatom",
     default: []
 })
-export const isOpen = atom({
+export const isOpen = atomFamily({
   key:"isOpen",
   default:false
 })

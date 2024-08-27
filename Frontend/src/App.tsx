@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Todos } from './Pages/Todos'
 import { Subtodo } from './Pages/Subtodo'
 import { RecoilRoot } from 'recoil'
-import { Info } from './Pages/Info'
+import Example from './Components/Example'
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Todos/>}/>
       <Route path='/subtodo/:id' element={<Subtodo/>}/>
-      <Route path='/info' element={<Info/>}/>
+      <Route path='/info' element={<Example/>}/>
     </Routes>
     </BrowserRouter>
     </RecoilRoot>

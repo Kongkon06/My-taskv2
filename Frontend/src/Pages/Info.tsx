@@ -7,7 +7,7 @@ export function Info({ parentId }: { parentId?: number }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [todo, setTodo] = useRecoilState(todoatom);
-    const [Open, setIsOpen] = useRecoilState(isOpen);
+    const [Open, setIsOpen] = useRecoilState(isOpen('Addbutton'));
     const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
 
     const resolvedParentId = parentId !== undefined ? parentId : currentId;

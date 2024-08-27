@@ -1,12 +1,14 @@
 import { Info } from "../Pages/Info";
 import { useRecoilState } from "recoil";
-import { isOpen } from "../Atoms/Atoms";
+import { currentid, isOpen } from "../Atoms/Atoms";
 
 export function Addbutton({parentId}:{parentId?:number}) {
-    const [Open, setIsOpen] = useRecoilState(isOpen);
+    const [Open, setIsOpen] = useRecoilState(isOpen('Addbutton'));
+    const [curr,setCurr] = useRecoilState(currentid);
     console.log("inside add")
     const toggleDropdown = () => {
         setIsOpen(!Open);
+        setCurr(parentId || 0);
     };
 
     return (
@@ -30,7 +32,7 @@ export function Addbutton({parentId}:{parentId?:number}) {
 
             {Open && (
                 <div className="fixed inset-0 z-20 flex justify-center items-center">
-                    <Info parentId={parentId} />
+                    <Info />
                 </div>
             )}
         </div>

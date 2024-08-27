@@ -6,18 +6,19 @@ import { useEffect } from "react"
 import axios from "axios"
 import { useRecoilState } from "recoil"
 import { childatom, todoatom } from "../Atoms/Atoms"
+import { DATABASE_URL } from "../config"
 export const Todos = ()=>{
     const navigate = useNavigate();
     const [todo,settodo]= useRecoilState(todoatom);
     const [child , setchild] = useRecoilState(childatom);
     useEffect(()=>{
-        axios.get('http://localhost:8787/api/v2/Todos/Parent').then(response=>{
+        axios.get(`${DATABASE_URL}/api/v2/Todos/Parent`).then(response=>{
             settodo(response.data.Todos);
             console.log(response.data.Todos);
         })
     },[todoatom]);
     async function dels(id:number){
-        const res = await axios.put('http://localhost:8787/api/v2/Delete',{
+        const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
           id:id
         })
         if(res.status===200){
@@ -26,7 +27,7 @@ export const Todos = ()=>{
       }
       async function fetch(id: number, status: boolean) {
         try {
-            const res = await axios.post('http://localhost:8787/api/v2/Todos/Child', { parentId: Number(id) });
+            const res = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, { parentId: Number(id) });
             
             if (res.data.Todos.length !== 0) {
                 setchild(res.data.Todos);
@@ -39,7 +40,7 @@ export const Todos = ()=>{
                     )
                 );
                 
-                const updateRes = await axios.post('http://localhost:8787/api/v2/Todo/update', {
+                const updateRes = await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
                     id: Number(id), status: !status
                 });
                 console.log("update :" + updateRes);

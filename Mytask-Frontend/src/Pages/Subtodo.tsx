@@ -6,16 +6,16 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { childatom } from "../Atoms/Atoms";
 import { Appbar } from "../Components/Appbar";
-
+import { DATABASE_URL } from "../config"
 export function Subtodo(){
     const {id}=useParams();
     const navigate = useNavigate();
     const [child , setchild] = useRecoilState(childatom);
-    useEffect(()=>{axios.post('http://localhost:8787/api/v2/Todos/Child',{
+    useEffect(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
         parentId:Number(id)
     }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id])
     async function dels(id:number){
-      const res = await axios.put('http://localhost:8787/api/v2/Delete',{
+      const res = await axios.put(`${DATABASE_URL}/Delete`,{
         id:id
       })
       if(res.status===200){
@@ -24,7 +24,7 @@ export function Subtodo(){
     }
     async function fetch(id: number, status: boolean) {
       try {
-          const res = await axios.post('http://localhost:8787/api/v2/Todos/Child', { parentId: Number(id) });
+          const res = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, { parentId: Number(id) });
           
           if (res.data.Todos.length !== 0) {
               setchild(res.data.Todos);
@@ -37,7 +37,7 @@ export function Subtodo(){
                   )
               );
               
-              const updateRes = await axios.post('http://localhost:8787/api/v2/Todo/update', {
+              const updateRes = await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
                   id: Number(id), status: !status
               });
               console.log("update :" + updateRes);

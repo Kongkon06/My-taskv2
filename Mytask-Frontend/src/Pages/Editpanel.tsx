@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { todoatom, isOpen, currentid } from "../Atoms/Atoms";
-
+import { DATABASE_URL } from "../config";
 export function Editpanel({ id }: { id: number }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -23,7 +23,7 @@ export function Editpanel({ id }: { id: number }) {
         }
     
         try {
-            const res = await axios.post('http://localhost:8787/api/v2/Todo', {
+            const res = await axios.post(`${DATABASE_URL}/api/v2//Todo/update`, {
                 name: name,
                 description: description,
                 id: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here

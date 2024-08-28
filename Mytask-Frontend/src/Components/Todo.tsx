@@ -19,7 +19,7 @@ export function Todo({ id, name, fn, status,del}:{id:number, name:string, fn:()=
           </div>
       </div>
       <div className="flex justify-center items-center">
-        <Hook fn={fn} name={name}/>
+        <Hook fn={fn} name={name} dels={del}/>
       </div>
     </div>
 }

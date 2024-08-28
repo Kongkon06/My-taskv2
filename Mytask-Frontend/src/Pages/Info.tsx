@@ -8,12 +8,12 @@ export function Info({ parentId }: { parentId?: number }) {
     const [description, setDescription] = useState("");
     const  setTodo = useSetRecoilState(todoatom);
     const setIsOpen = useSetRecoilState(isOpen('Addbutton'));
-    const [currentId,setcurent] = useRecoilState(currentid); 
+    const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
 
     const resolvedParentId = parentId !== undefined ? parentId : currentId;
 
     useEffect(() => {
-        console.log("Inside Info resolvedParentId:", resolvedParentId); 
+        console.log("Inside Info resolvedParentId:", resolvedParentId); // Log to ensure resolvedParentId is correct
     }, [resolvedParentId]);
 
     async function Add() {
@@ -26,10 +26,11 @@ export function Info({ parentId }: { parentId?: number }) {
             const res = await axios.post(`${DATABASE_URL}/api/v2/Todo`, {
                 name: name,
                 description: description,
-                parentId: resolvedParentId===0?null:resolvedParentId, 
+                parentId: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here
             });
             console.log("Response from server:", res);
     
+            // Check if parentId is undefined before updating the todo state
             if (resolvedParentId === 0) {
                 setTodo(prevTodos => [...prevTodos, res.data]);
             }

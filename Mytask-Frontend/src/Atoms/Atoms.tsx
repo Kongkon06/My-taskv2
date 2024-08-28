@@ -9,9 +9,10 @@ interface Todo {
 }
 type Regular = Exclude<Todo ,'parentId'>;
 
+// Initialize with an array of Todo objects
 export const todoatom = atom<Regular[]>({
   key: 'todoatom',
-  default: [], 
+  default: [], // default should be an empty array, not an object
 });
 
 export const childatom = atom<Todo[]>({
@@ -22,7 +23,10 @@ export const isOpen = atomFamily({
   key:"isOpen",
   default:false
 })
-
+export const editpan = atom({
+  key:"editpan",
+  default:false
+})
 export const currentid = atom({
   key:"currentid",
   default:0

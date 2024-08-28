@@ -15,7 +15,7 @@ export function Subtodo(){
         parentId:Number(id)
     }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id])
     async function dels(id:number){
-      const res = await axios.put(`${DATABASE_URL}/Delete`,{
+      const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id
       })
       if(res.status===200){

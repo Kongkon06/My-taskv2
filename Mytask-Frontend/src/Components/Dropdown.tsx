@@ -3,7 +3,7 @@ import { currentid, isOpen } from "../Atoms/Atoms";
 import { Info } from "../Pages/Info";
 import { Editpanel } from "../Pages/Editpanel";
 
-export function Dropdown() {
+export function Dropdown({del}:{del: () => void}) {
   // State management for dropdown and modals
   const [isInfoOpen, setIsInfoOpen] = useRecoilState(isOpen('Addbutton'));
   const [isEditOpen, setIsEditOpen] = useRecoilState(isOpen('Editpanel'));
@@ -59,12 +59,15 @@ export function Dropdown() {
             )}
           </li>
           <li>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          <button
+              id="editButton"
+              onClick={del}
+              type="button"
+              aria-hidden="true"
+              className="flex items-center justify-between w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
-              Done
-            </a>
+              Delete
+            </button>
           </li>
         </ul>
       </div>

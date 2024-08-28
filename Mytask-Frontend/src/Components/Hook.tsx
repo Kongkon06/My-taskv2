@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Dropdown } from './Dropdown';
 
-export default function Hook({ fn, name }: { fn: () => void; name: string }) {
+export default function Hook({ fn, del, name }: { fn: () => void;del: () => void; name: string }) {
   const [click, setClick] = useState('');
   const timerRef = useRef<number | null>(null); // Use 'number' for browser environment
   const isLongPress = useRef(false);
@@ -59,7 +59,7 @@ export default function Hook({ fn, name }: { fn: () => void; name: string }) {
         >
           {name}
         </button>
-        {click === 'Longpress' && <Dropdown />}
+        {click === 'Longpress' && <Dropdown del={del}/>}
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { Dropdown } from './Dropdown';
 
-export default function Hook({ fn, name }: { fn: () => void; name: string }) {
+export default function Hook({ fn,dels, name }: { fn: () => void;dels: () => void; name: string }) {
   const [click, setClick] = useState('');
-  const timerRef = useRef<number | null>(null); // Use 'number' for browser environment
+  const timerRef = useRef<number | null>(null); 
   const isLongPress = useRef(false);
 
   function handleOnClick() {
@@ -16,7 +16,7 @@ export default function Hook({ fn, name }: { fn: () => void; name: string }) {
   }
 
   function handleOnMouseUp() {
-    if (timerRef.current !== null) { // Type guard to check if timerRef.current is not null
+    if (timerRef.current !== null) {
       clearTimeout(timerRef.current);
     }
     console.log('OnMouseUp');
@@ -33,7 +33,7 @@ export default function Hook({ fn, name }: { fn: () => void; name: string }) {
   }
 
   function handleOnTouchEnd() {
-    if (timerRef.current !== null) { // Type guard to check if timerRef.current is not null
+    if (timerRef.current !== null) { 
       clearTimeout(timerRef.current);
     }
     console.log('TouchEnd');
@@ -41,7 +41,7 @@ export default function Hook({ fn, name }: { fn: () => void; name: string }) {
 
   function startPress() {
     isLongPress.current = false;
-    timerRef.current = window.setTimeout(() => { // Use window.setTimeout for browser
+    timerRef.current = window.setTimeout(() => {
       setClick('Longpress');
       isLongPress.current = true;
     }, 500);
@@ -59,7 +59,7 @@ export default function Hook({ fn, name }: { fn: () => void; name: string }) {
         >
           {name}
         </button>
-        {click === 'Longpress' && <Dropdown />}
+        {click === 'Longpress' && <Dropdown dels={dels}/>}
       </div>
     </div>
   );

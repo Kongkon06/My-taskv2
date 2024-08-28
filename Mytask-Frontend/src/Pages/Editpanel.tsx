@@ -8,12 +8,12 @@ export function Editpanel({ id }: { id: number }) {
     const [description, setDescription] = useState("");
     const setTodo = useSetRecoilState(todoatom);
     const  setIsOpen = useSetRecoilState(isOpen('Editpanel'));
-    const setcurent = useSetRecoilState(currentid); // Get the current ID from Recoil
+    const setcurent = useSetRecoilState(currentid); 
     console.log("inside editpanel")
     const resolvedParentId = id;
 
     useEffect(() => {
-        console.log("Info resolvedParentId:", resolvedParentId); // Log to ensure resolvedParentId is correct
+        console.log("Info resolvedParentId:", resolvedParentId); 
     }, [resolvedParentId]);
 
     async function Add() {
@@ -26,11 +26,10 @@ export function Editpanel({ id }: { id: number }) {
             const res = await axios.post(`${DATABASE_URL}/api/v2//Todo/update`, {
                 name: name,
                 description: description,
-                id: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here
+                id: resolvedParentId===0?null:resolvedParentId, 
             });
             console.log("Response from server:", res);
-    
-            // Check if parentId is undefined before updating the todo state
+
             if (resolvedParentId === 0) {
                 setTodo(prevTodos => [...prevTodos, res.data]);
             }

@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react';
 import { Dropdown } from './Dropdown';
+import { useSetRecoilState } from 'recoil';
+import { currentid } from '../Atoms/Atoms';
 
-export default function Hook({ fn, del, name }: { fn: () => void;del: () => void; name: string }) {
+export default function Hook({ fn, del, name ,id }: { fn: () => void;del: () => void; name: string ; id: number}) {
   const [click, setClick] = useState('');
   const timerRef = useRef<number | null>(null); // Use 'number' for browser environment
   const isLongPress = useRef(false);
-
+  const setCurr = useSetRecoilState(currentid);
   function handleOnClick() {
     if (isLongPress.current) {
       console.log('It is longpress');
@@ -43,6 +45,7 @@ export default function Hook({ fn, del, name }: { fn: () => void;del: () => void
     isLongPress.current = false;
     timerRef.current = window.setTimeout(() => { // Use window.setTimeout for browser
       setClick('Longpress');
+      setCurr(id);
       isLongPress.current = true;
     }, 500);
   }

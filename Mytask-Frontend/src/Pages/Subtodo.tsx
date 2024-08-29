@@ -1,7 +1,7 @@
 import { useNavigate, useParams, } from "react-router-dom";
 import { Addbutton } from "../Buttons/Addbutton";
 import { Todo } from "../Components/Todo";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { childatom } from "../Atoms/Atoms";
@@ -11,9 +11,9 @@ export function Subtodo(){
     const {id}=useParams();
     const navigate = useNavigate();
     const [child , setchild] = useRecoilState(childatom);
-    useEffect(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
+    useCallback(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
         parentId:Number(id)
-    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id])
+    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id,childatom])
     async function dels(id:number){
       const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id

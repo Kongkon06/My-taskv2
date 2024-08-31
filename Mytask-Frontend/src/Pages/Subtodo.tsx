@@ -3,17 +3,18 @@ import { Addbutton } from "../Buttons/Addbutton";
 import { Todo } from "../Components/Todo";
 import { useCallback } from "react";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { childatom } from "../Atoms/Atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { childatom, mainload } from "../Atoms/Atoms";
 import { Appbar } from "../Components/Appbar";
 import { DATABASE_URL } from "../config"
 export function Subtodo(){
     const {id}=useParams();
     const navigate = useNavigate();
     const [child , setchild] = useRecoilState(childatom);
+    const setload = useSetRecoilState(mainload);
     useCallback(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
         parentId:Number(id)
-    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id,childatom])
+    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);setload(false)})},[id,childatom])
     async function dels(id:number){
       const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id

@@ -5,18 +5,26 @@ import { Todo } from "../Components/Todo"
 import { useEffect } from "react"
 import axios from "axios"
 import { useRecoilState } from "recoil"
-import { childatom, todoatom } from "../Atoms/Atoms"
+import { childatom, mainload, todoatom } from "../Atoms/Atoms"
 import { DATABASE_URL } from "../config"
+import { Skeleton } from "../Components/Sleketon"
 export const Todos = ()=>{
     const navigate = useNavigate();
     const [todo,settodo]= useRecoilState(todoatom);
     const [child , setchild] = useRecoilState(childatom);
+    const [loading,setload] = useRecoilState(mainload);
     useEffect(()=>{
         axios.get(`${DATABASE_URL}/api/v2/Todos/Parent`).then(response=>{
             settodo(response.data.Todos);
+            setload(false)
             console.log(response.data.Todos);
         })
     },[todoatom]);
+    if(loading){
+        return <div>
+            <Skeleton/>
+        </div>
+    }
     async function dels(id:number){
         const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
           id:id
@@ -26,6 +34,7 @@ export const Todos = ()=>{
         }
       }
       async function fetch(id: number, status: boolean) {
+        setload(true);
         try {
             const res = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, { parentId: Number(id) });
             

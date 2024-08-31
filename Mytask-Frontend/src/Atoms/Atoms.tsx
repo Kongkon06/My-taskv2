@@ -36,3 +36,7 @@ export const task_com = atomFamily({
     default:false
   })
   
+  export const mainload = atom({
+    key:'mainload',
+    default:true
+  })

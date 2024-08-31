@@ -12,9 +12,10 @@ export function Subtodo(){
     const navigate = useNavigate();
     const [child , setchild] = useRecoilState(childatom);
     const setload = useSetRecoilState(mainload);
+    setload(false)
     useCallback(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
         parentId:Number(id)
-    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);setload(false)})},[id,childatom])
+    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id,child])
     async function dels(id:number){
       const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id

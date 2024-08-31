@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRecoilState,useSetRecoilState } from "recoil";
-import { todoatom, isOpen, currentid } from "../Atoms/Atoms";
+import { todoatom, isOpen, currentid, childatom } from "../Atoms/Atoms";
 import { DATABASE_URL } from "../config";
 export function Info({ parentId }: { parentId?: number }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const  setTodo = useSetRecoilState(todoatom);
+    const  setchild = useSetRecoilState(childatom);
     const setIsOpen = useSetRecoilState(isOpen('Addbutton'));
     const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
 
@@ -33,6 +34,8 @@ export function Info({ parentId }: { parentId?: number }) {
             // Check if parentId is undefined before updating the todo state
             if (resolvedParentId === 0) {
                 setTodo(prevTodos => [...prevTodos, res.data]);
+            }else{
+                setchild(prevTodos => [...prevTodos, res.data]);
             }
     
             setIsOpen(false);

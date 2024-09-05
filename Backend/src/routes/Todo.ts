@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { Todos } from "./Parents";
+import { Daily } from "./Daily";
 export const Todo = new Hono<{
     Bindings: {
         DATABASE_URL: string,
@@ -10,6 +11,7 @@ export const Todo = new Hono<{
 }>();
 
 Todo.route('/Todos',Todos)
+Todo.route('/Daily',Daily)
 Todo.post('/Todo',async (c) => {
     const body =await c.req.json();
     try {

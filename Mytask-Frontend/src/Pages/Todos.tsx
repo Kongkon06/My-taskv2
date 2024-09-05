@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { Addbutton } from "../Buttons/Addbutton"
-import { Appbar } from "../Components/Appbar"
 import { Todo } from "../Components/Todo"
 import { useEffect } from "react"
 import axios from "axios"
@@ -59,9 +58,8 @@ export const Todos = ()=>{
         }
     }
     
-    return <div className="w-full h-screen bg-slate-900">
-        <Appbar/>
-        <div className="grid grid-cols-2 px-2 gap-2 sm:grid-cols-2 sm:gap-2 sm:grid-rows-2 lg:grid-cols-5 lg:gap-2">
+    return <div className="w-full h-full bg-slate-900">
+        <div className="grid grid-cols-1 px-2 gap-2 sm:grid-cols-1 sm:gap-2 lg:grid-cols-5 lg:gap-2">
             {todo.map((task) => (
         <Todo
           key={task.id}

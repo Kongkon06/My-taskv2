@@ -21,3 +21,27 @@ model Todo {
 }
 
 
+model Completion {
+  id            Int        @id @default(autoincrement())
+  date          DateTime
+  completed     Boolean    @default(false)
+
+  todoId        Int
+  
+  dailyTask     Dailytask? @relation(fields: [dailyTaskId], references: [id])
+  dailyTaskId   Int?
+  @@unique([dailyTaskId, date])
+}
+
+model Dailytask {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String?
+  dueDate      DateTime?
+  repeatDaily  Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  completions  Completion[]
+}
+

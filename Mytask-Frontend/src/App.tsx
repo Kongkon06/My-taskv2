@@ -1,10 +1,9 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Todos } from './Pages/Todos'
 import { Subtodo } from './Pages/Subtodo'
 import { RecoilRoot } from 'recoil'
-import DrawerNavigation from './Components/Sidebar'
 import { Completed } from './Pages/Completed'
+import { Home } from './Pages/Home'
 
 function App() {
 
@@ -13,9 +12,8 @@ function App() {
     <RecoilRoot>
     <BrowserRouter>
     <Routes>
-      <Route path='/' element={<Todos/>}/>
+      <Route path='/' element={<Home/>}/>
       <Route path='/subtodo/:id' element={<Subtodo/>}/>
-      <Route path='/info' element={<DrawerNavigation/>}/>
       <Route path='/completed' element={<Completed/>}/>
     </Routes>
     </BrowserRouter>

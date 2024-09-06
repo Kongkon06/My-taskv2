@@ -44,13 +44,13 @@ Daily.post('/update', async (c) => {
             },
             update: {
                 completed: body.status,
-                todoId: body.id,
+                todoId: 1,
             },
             create: {
                 dailyTaskId: body.id,
                 date: startOfDay,
                 completed: body.status,
-                todoId: body.todoId,
+                todoId: 1,
             },
         });
 

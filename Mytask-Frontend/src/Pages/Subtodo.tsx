@@ -15,7 +15,7 @@ export function Subtodo(){
     setload(false)
     useEffect(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
         parentId:Number(id)
-    }).then(response=>{setchild(response.data.Todos);console.log("sdubto:"+child);})},[id,child])
+    }).then(response=>{setchild(response.data.Todos);})},[id,child])
     async function dels(id:number){
       const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id
@@ -30,7 +30,6 @@ export function Subtodo(){
           
           if (res.data.Todos.length !== 0) {
               setchild(res.data.Todos);
-              console.log(child);
               navigate(`/subtodo/${id}`);
           } else {
               setchild(prevTodos => 
@@ -39,10 +38,9 @@ export function Subtodo(){
                   )
               );
               
-              const updateRes = await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
+              await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
                   id: Number(id), status: !status
               });
-              console.log("update :" + updateRes);
           }
       } catch (error) {
           console.error("There was an error updating the todo!", error);

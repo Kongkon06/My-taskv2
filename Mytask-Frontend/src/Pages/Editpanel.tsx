@@ -1,20 +1,14 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { todoatom, isOpen, currentid } from "../Atoms/Atoms";
+import { isOpen, currentid, dailyatom } from "../Atoms/Atoms";
 import { DATABASE_URL } from "../config";
-export function Editpanel({ id }: { id: number }) {
+export function Editpanel() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const setTodo = useSetRecoilState(todoatom);
+    const setdaily = useSetRecoilState(dailyatom);
     const  setIsOpen = useSetRecoilState(isOpen('Editpanel'));
     const setcurent = useSetRecoilState(currentid); // Get the current ID from Recoil
-    console.log("inside editpanel")
-    const resolvedParentId = id;
-
-    useEffect(() => {
-        console.log("Info resolvedParentId:", resolvedParentId); // Log to ensure resolvedParentId is correct
-    }, [resolvedParentId]);
 
     async function Add() {
         if (!name || !description) {
@@ -23,16 +17,14 @@ export function Editpanel({ id }: { id: number }) {
         }
     
         try {
-            const res = await axios.post(`${DATABASE_URL}/api/v2//Todo/update`, {
-                name: name,
+            const res = await axios.post(`${DATABASE_URL}/api/v2/Daily`, {
+                title: name,
                 description: description,
-                id: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here
             });
             console.log("Response from server:", res);
     
-            // Check if parentId is undefined before updating the todo state
-            if (resolvedParentId === 0) {
-                setTodo(prevTodos => [...prevTodos, res.data]);
+            if (res.status === 200) {
+                setdaily(prevTodos => [...prevTodos, res.data]);
             }
     
             setIsOpen(false);

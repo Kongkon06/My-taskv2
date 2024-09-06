@@ -3,20 +3,19 @@ import { Addbutton } from "../Buttons/Addbutton"
 import { Todo } from "../Components/Todo"
 import { useEffect } from "react"
 import axios from "axios"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { childatom, mainload, todoatom } from "../Atoms/Atoms"
 import { DATABASE_URL } from "../config"
 import { Skeleton } from "../Components/Sleketon"
 export const Todos = ()=>{
     const navigate = useNavigate();
     const [todo,settodo]= useRecoilState(todoatom);
-    const [child , setchild] = useRecoilState(childatom);
+    const  setchild = useSetRecoilState(childatom);
     const [loading,setload] = useRecoilState(mainload);
     useEffect(()=>{
         axios.get(`${DATABASE_URL}/api/v2/Todos/Parent`).then(response=>{
             settodo(response.data.Todos);
             setload(false)
-            console.log(response.data.Todos);
         })
     },[todoatom]);
     if(loading){
@@ -39,7 +38,6 @@ export const Todos = ()=>{
             
             if (res.data.Todos.length !== 0) {
                 setchild(res.data.Todos);
-                console.log(child);
                 navigate(`/subtodo/${id}`);
             } else {
                 settodo(prevTodos => 
@@ -48,10 +46,9 @@ export const Todos = ()=>{
                     )
                 );
                 
-                const updateRes = await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
+                await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
                     id: Number(id), status: !status
                 });
-                console.log("update :" + updateRes);
             }
         } catch (error) {
             console.error("There was an error updating the todo!", error);

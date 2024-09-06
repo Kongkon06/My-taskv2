@@ -2,23 +2,16 @@ import { useState } from "react";
 import { useRecoilState,useSetRecoilState } from "recoil";
 import { currentid, isOpen } from "../Atoms/Atoms";
 import { Info } from "../Pages/Info"; 
-import { Editpanel } from "../Pages/Editpanel";
 
 export function Threedots({ parentId }: { parentId?: number }) {
     const [isMultiDropdownOpen, setIsMultiDropdownOpen] = useState(false);
-    const [isDoubleDropdownOpen, setIsDoubleDropdownOpen] = useRecoilState(isOpen('Editpanel'));
     const [ eso ,set] =  useRecoilState(isOpen('Addbutton'))
     const  setCurr = useSetRecoilState(currentid);
-    console.log(parentId);
   
     const toggleMultiDropdown = () => {
         setIsMultiDropdownOpen(!isMultiDropdownOpen);
       };
-    
-      const toggleDoubleDropdown = () => {
-        setIsDoubleDropdownOpen(!isDoubleDropdownOpen);
-      };
-    
+
       const toggleeso = () => {
         set(!eso);
         setCurr(parentId || 0);
@@ -63,21 +56,6 @@ export function Threedots({ parentId }: { parentId?: number }) {
     
                   {eso && <div className="fixed inset-0 z-20 flex justify-center items-center">
                         <Info />
-                    </div>}
-                </li>
-                <li>
-                  <button
-                    id="doubleDropdownButton"
-                    onClick={toggleDoubleDropdown}
-                    type="button"
-                    aria-hidden="true"
-                    className="flex items-center justify-between w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Edit
-                  </button>
-    
-                  {isDoubleDropdownOpen && <div className="fixed inset-0 z-20 flex justify-center items-center">
-                        <Editpanel id={1} />
                     </div>}
                 </li>
                 <li>

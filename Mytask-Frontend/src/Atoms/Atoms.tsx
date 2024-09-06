@@ -7,6 +7,16 @@ interface Todo {
   parentId:number;
   description: string;
 }
+export interface Daily{
+  "id": number,
+  "title": string,
+  "description": string
+  "dueDate": string
+  "repeatDaily": boolean,
+  "createdAt": string,
+  "updatedAt": string,
+  "completions": []
+}
 type Regular = Exclude<Todo ,'parentId'>;
 
 // Initialize with an array of Todo objects
@@ -39,4 +49,8 @@ export const task_com = atomFamily({
   export const mainload = atom({
     key:'mainload',
     default:true
+  })
+  export const dailyatom = atom<Daily[]>({
+    key:'daily',
+    default:[]
   })

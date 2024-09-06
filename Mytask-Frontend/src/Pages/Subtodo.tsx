@@ -3,19 +3,17 @@ import { Addbutton } from "../Buttons/Addbutton";
 import { Todo } from "../Components/Todo";
 import { useEffect } from "react";
 import axios from "axios";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { childatom, mainload } from "../Atoms/Atoms";
+import { useRecoilState  } from "recoil";
+import { childatom } from "../Atoms/Atoms";
 import { Appbar } from "../Components/Appbar";
 import { DATABASE_URL } from "../config"
 export function Subtodo(){
     const {id}=useParams();
     const navigate = useNavigate();
     const [child , setchild] = useRecoilState(childatom);
-    const setload = useSetRecoilState(mainload);
-    setload(false)
     useEffect(()=>{axios.post(`${DATABASE_URL}/api/v2/Todos/Child`,{
         parentId:Number(id)
-    }).then(response=>{setchild(response.data.Todos);})},[id,child])
+    }).then(response=>{setchild(response.data.Todos);})},[])
     async function dels(id:number){
       const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id

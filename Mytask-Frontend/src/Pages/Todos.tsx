@@ -52,6 +52,8 @@ export const Todos = ()=>{
             }
         } catch (error) {
             console.error("There was an error updating the todo!", error);
+        }finally{
+            setload(false);
         }
     }
     

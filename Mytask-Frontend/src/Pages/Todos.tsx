@@ -3,19 +3,19 @@ import { Addbutton } from "../Buttons/Addbutton"
 import { Todo } from "../Components/Todo"
 import { useEffect } from "react"
 import axios from "axios"
-import { useRecoilState, useSetRecoilState } from "recoil"
-import { childatom, mainload, todoatom } from "../Atoms/Atoms"
+import { useRecoilState } from "recoil"
+import { mainload, todoatom } from "../Atoms/Atoms"
 import { DATABASE_URL } from "../config"
 import { Skeleton } from "../Components/Sleketon"
 export const Todos = ()=>{
     const navigate = useNavigate();
     const [todo,settodo]= useRecoilState(todoatom);
-    const  setchild = useSetRecoilState(childatom);
     const [loading,setload] = useRecoilState(mainload);
     useEffect(()=>{
         axios.get(`${DATABASE_URL}/api/v2/Todos/Parent`).then(response=>{
             settodo(response.data.Todos);
-            setload(false)
+            setload(false);
+            console.log(todo);
         })
     },[todoatom]);
     if(loading){
@@ -32,24 +32,29 @@ export const Todos = ()=>{
         }
       }
       async function fetch(id: number, status: boolean) {
-        setload(true);
         try {
-            const res = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, { parentId: Number(id) });
             
-            if (res.data.Todos.length !== 0) {
-                setchild(res.data.Todos);
-                navigate(`/subtodo/${id}`);
-            } else {
-                settodo(prevTodos => 
-                    prevTodos.map(t => 
-                        t.id === id ? { ...t, status: !t.status } : t
-                    )
-                );
-                
-                await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
-                    id: Number(id), status: !status
-                });
-            }
+            const update = async () => {settodo(prevTodos => 
+                prevTodos.map(t => 
+                    t.id === id ? { ...t, status: !t.status } : t
+                )
+            );
+            
+            await axios.post(`${DATABASE_URL}/api/v2/Todo/update`, {
+                id: Number(id), status: !status
+            });}
+
+            const isPresent =()=> todo.map(todos => {
+                if (todos.id === id) {
+                    if (todos.subTodos.length === 0) {
+                        update(); 
+                    } else {
+                        navigate(`subtodo/${id}`);
+                    }
+                  }
+                  return todos;
+            })
+            isPresent();
         } catch (error) {
             console.error("There was an error updating the todo!", error);
         }finally{

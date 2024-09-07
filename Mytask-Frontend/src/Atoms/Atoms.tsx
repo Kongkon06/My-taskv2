@@ -6,6 +6,7 @@ interface Todo {
   status: boolean;
   parentId:number;
   description: string;
+  subTodos: []
 }
 export interface Daily{
   "id": number,

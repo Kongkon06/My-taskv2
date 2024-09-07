@@ -16,6 +16,13 @@ Todos.get('/Parent',async (c) => {
         const Todos =await prisma.todo.findMany({
             where:{
                 parentId:null
+            },
+            include:{
+                subTodos:{
+                    select:{
+                        name:true
+                    }
+                }
             }
         });
         return c.json({Todos});
@@ -33,7 +40,14 @@ Todos.post('/Child',async (c) => {
         const Todos =await prisma.todo.findMany({
            where:{
             parentId:body.parentId
-           }})
+           },include:{
+            subTodos:{
+                select:{
+                    name:true
+                }
+            }
+           }
+        })
         return c.json({Todos});
     }catch(e){
         c.status(411);

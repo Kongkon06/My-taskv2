@@ -57,6 +57,7 @@ const DrawerNavigation = () => {
         <div className="py-4 overflow-y-auto ">
           <div role="button" onClick={()=>{navigate('/')}} className="text-white text-lg p-3 border-x border-indigo-700">Home</div>
           <div role="button" onClick={()=>{navigate('/completed')}} className="text-white text-lg p-3 border-x border-indigo-700">Completed Task</div>
+          <div role="button" onClick={()=>{navigate('/calendar')}} className="text-white text-lg p-3 border-x border-indigo-700">Calendar</div>
         </div>
       </div>
     </div>

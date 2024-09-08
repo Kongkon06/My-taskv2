@@ -17,7 +17,7 @@ export function Subtodo(){
         parentId:Number(id)
     }).then(response=>{setchild(response.data.Todos);
       setload(false);
-    })},[])
+    })},[id])
     async function dels(id:number){
       const res = await axios.put(`${DATABASE_URL}/api/v2/Delete`,{
         id:id
@@ -44,7 +44,7 @@ export function Subtodo(){
               if (todos.subTodos.length === 0) {
                 update(); 
             } else {
-                navigate(`subtodo/${id}`);
+                navigate(`/subtodo/${id}`);
             }
               }
               return todos;

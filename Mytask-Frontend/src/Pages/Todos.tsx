@@ -49,7 +49,7 @@ export const Todos = ()=>{
                     if (todos.subTodos.length === 0) {
                         update(); 
                     } else {
-                        navigate(`subtodo/${id}`);
+                        navigate(`/subtodo/${id}`);
                     }
                   }
                   return todos;

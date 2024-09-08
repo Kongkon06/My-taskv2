@@ -1,13 +1,16 @@
-import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { Appbar } from '../Components/Appbar';
+import { atom, useSetRecoilState } from 'recoil';
 
 type CalendarValue = Date | Date[] | [Date, Date] | null;
-
+const daye = atom<CalendarValue>({
+  key:"dayw",
+  default:new Date()
+})
 function Calc() {
-  const [date, setDate] = useState<CalendarValue>(new Date());
-  const [events, setEvents] = useState([
+  const setDate = useSetRecoilState(daye);
+  const events= [
     { date: new Date(2024, 0, 3), event: 'Design review', time: '10AM' },
     { date: new Date(2024, 0, 3), event: 'Sales meeting', time: '2PM' },
     { date: new Date(2024, 0, 7), event: 'Date night', time: '6PM' },
@@ -15,7 +18,7 @@ function Calc() {
     { date: new Date(2024, 0, 22), event: 'Maple syrup museum', time: '3PM' },
     { date: new Date(2024, 0, 22), event: 'Hockey game', time: '7PM' },
     { date: new Date(2024, 1, 5), event: 'Cinema with friends', time: '9PM' },
-  ]);
+  ];
 
   const tileContent = ({ date, view }: { date: Date; view: string }) => {
     if (view === 'month') {

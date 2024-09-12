@@ -1,1 +1,1 @@
-export const DATABASE_URL ="http://localhost:8787"
+export const DATABASE_URL ="https://backend.kbora3525.workers.dev"

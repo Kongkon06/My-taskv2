@@ -27,8 +27,8 @@ export function Auth({type}:{type : "signup"| "signin"}){
       }
     }
     return <div className=" h-screen font-dm-sans flex justify-center">
-        <div className="h-auto w-2/5 flex justify-center flex-col p-2 ">
-        <div className="flex justify-center text-3xl font-extrabold mb-3">Create an account</div>
+        <div className=" flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/5">
+        <div className="flex justify-center font-extrabold mb-3 sm:text-xl lg:text-3xl">Create an account</div>
         <div className="flex justify-center mb-3">
             <div>{type==="signup"?"Already hava an account?":"Don't have an account"}</div>
             <div role="button" onClick={()=>{navigate(type==="signup"?"/Signin":"/Signup")}} className="underline hover:underline-offset-auto">{type==="signup"?"Login":"Sign up"}</div>
@@ -40,7 +40,7 @@ export function Auth({type}:{type : "signup"| "signin"}){
         
         <LabelledInput labell="Password" type="password" placeholder="" onchange={(e)=>{setpostInputs(c=>({...c,password:e.target.value}))}}/>
 
-        <button type="button" onClick={SendReq} className=" w-full mt-9 text-white font-bold bg-indigo-700 hover:bg-indigo-600 rounded-lg text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-indigo-700 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-700">{type === "signup"?"Sign up": "Sign in"}</button>
+        <button type="button" onClick={SendReq} className=" w-full mt-9 text-white font-bold bg-indigo-700 hover:bg-indigo-600 rounded-lg sm:text-md lg:text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-indigo-700 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-700">{type === "signup"?"Sign up": "Sign in"}</button>
         </div></div>
     </div>
 }
@@ -52,7 +52,7 @@ interface LabelledInputtype{
 }
 function LabelledInput({labell,placeholder,onchange,type}:LabelledInputtype){
     return <div className="w-full font-dm-sans mb-3">
-   <div className=" w-64 pr-3 flex justify-start text-2xl font-bold mb-3 ">{labell}</div>
+   <div className=" w-64 pr-3 flex justify-start sm:text-lg lg:text-2xl font-bold mb-3 ">{labell}</div>
     <div className="">
       <input
         type={type||"text"}

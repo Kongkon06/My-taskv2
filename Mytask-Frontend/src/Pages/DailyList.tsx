@@ -1,19 +1,23 @@
 import { useEffect } from "react";
 import { Dailytask } from "../Components/Dailytask"; 
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { dailyatom } from "../Atoms/Atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { dailyatom, parentid } from "../Atoms/Atoms";
 import { isOpen } from "../Atoms/Atoms";
 import { Editpanel } from "./Editpanel";
 import { DATABASE_URL } from "../config";
 export function Dailypage(){
+    const userid = useRecoilValue(parentid)
     const [daily,setdaily] = useRecoilState(dailyatom)
     useEffect(()=>{
-        axios.get(`${DATABASE_URL}/api/v2/Daily`).then((res)=>{
+        axios.post(`${DATABASE_URL}/api/v2/Daily`,{
+            userId:userid
+        }).then((res)=>{
             setdaily(res.data);
         });
-    },[])
+    },[dailyatom])
     return <div className="w-full h-auto border-2  border-indigo-900 p-3 bg-slate-900">
+        <div className="flex justify-center font-dm-sans font-semibold mb-2 text-xl text-white">Daily task</div>
         <div className="mb-2">
         {daily.map((task)=>(
             <Dailytask key={task.id} id={task.id} name={task.title} completions={task.completions}/>

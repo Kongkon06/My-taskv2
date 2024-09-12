@@ -1,5 +1,4 @@
 import { atom,atomFamily } from 'recoil';
-
 interface Todo {
   id: number;
   name: string;
@@ -8,15 +7,20 @@ interface Todo {
   description: string;
   subTodos: []
 }
-export interface Daily{
-  "id": number,
-  "title": string,
-  "description": string
-  "dueDate": string
-  "repeatDaily": boolean,
-  "createdAt": string,
-  "updatedAt": string,
-  "completions": []
+export interface Completion {
+  id: number;
+  date: string;
+  completed: boolean;
+}
+export interface Daily {
+  id: number;
+  title: string;
+  description: string;
+  dueDate: string;
+  repeatDaily: boolean;
+  createdAt: string;
+  updatedAt: string;
+  completions: Completion[]; // Correct type for completions
 }
 type Regular = Exclude<Todo ,'parentId'>;
 
@@ -40,6 +44,10 @@ export const editpan = atom({
 })
 export const currentid = atom({
   key:"currentid",
+  default:0
+})
+export const parentid = atom({
+  key:"parentid",
   default:0
 })
 export const task_com = atomFamily({

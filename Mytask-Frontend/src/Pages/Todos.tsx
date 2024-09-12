@@ -3,21 +3,24 @@ import { Addbutton } from "../Buttons/Addbutton"
 import { Todo } from "../Components/Todo"
 import { useEffect } from "react"
 import axios from "axios"
-import { useRecoilState } from "recoil"
-import { mainload, todoatom } from "../Atoms/Atoms"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { mainload, parentid, todoatom } from "../Atoms/Atoms"
 import { DATABASE_URL } from "../config"
 import { Skeleton } from "../Components/Sleketon"
 export const Todos = ()=>{
     const navigate = useNavigate();
+    const userid = useRecoilValue(parentid);
     const [todo,settodo]= useRecoilState(todoatom);
     const [loading,setload] = useRecoilState(mainload);
     useEffect(()=>{
-        axios.get(`${DATABASE_URL}/api/v2/Todos/Parent`).then(response=>{
+        axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
+            userId:userid
+        }).then(response=>{
             settodo(response.data.Todos);
             setload(false);
-            console.log(todo);
+            console.log(response.data.Todos);
         })
-    },[todoatom]);
+    },[todoatom,userid]);
     if(loading){
         return <div>
             <Skeleton/>

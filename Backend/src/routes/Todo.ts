@@ -13,22 +13,25 @@ export const Todo = new Hono<{
 Todo.route('/Todos',Todos)
 Todo.route('/Daily',Daily)
 Todo.post('/Todo',async (c) => {
-    const body =await c.req.json();
+    const body = await c.req.json();
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
     try {
-        const prisma = new PrismaClient({
-            datasourceUrl: c.env.DATABASE_URL,
-        }).$extends(withAccelerate());
-        const todo =await prisma.todo.create({
-           data:{
-            name:body.name,
-            description:body.description,
-            parentId:body.parentId
-        }})
-        return c.json(todo)
-    }catch(e){
-        c.status(411);
-        console.log(e);
-        return c.json({msg:e});
+      // Creating a new Todo
+      const todo = await prisma.todo.create({
+        data: {
+          name: body.name,
+          description: body.description,
+          userId: body.userId,      // Reference to User who created the Todo
+          parentId: body.parentId,  // If this Todo is a subtask, this refers to the parent Todo ID
+        }
+      });
+  
+      return c.json(todo);  // Respond with the created Todo
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Error creating Todo" }, 500);
     }
 })
 Todo.post('/Todo/update',async (c) => {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useRecoilState,useSetRecoilState } from "recoil";
-import { todoatom, isOpen, currentid, childatom } from "../Atoms/Atoms";
+import { useRecoilState,useRecoilValue,useSetRecoilState } from "recoil";
+import { todoatom, isOpen, currentid, childatom, parentid } from "../Atoms/Atoms";
 import { DATABASE_URL } from "../config";
 export function Info({ parentId }: { parentId?: number }) {
     const [name, setName] = useState("");
@@ -10,7 +10,7 @@ export function Info({ parentId }: { parentId?: number }) {
     const  setchild = useSetRecoilState(childatom);
     const setIsOpen = useSetRecoilState(isOpen('Addbutton'));
     const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
-
+    const user = useRecoilValue(parentid);
     const resolvedParentId = parentId !== undefined ? parentId : currentId;
 
     useEffect(() => {
@@ -24,10 +24,12 @@ export function Info({ parentId }: { parentId?: number }) {
         }
     
         try {
+            console.log(user);
             const res = await axios.post(`${DATABASE_URL}/api/v2/Todo`, {
                 name: name,
                 description: description,
-                parentId: resolvedParentId===0?null:resolvedParentId, // Use resolvedParentId here
+                userId: user,
+                parentId: resolvedParentId===0?null:resolvedParentId // Use resolvedParentId here
             });
             console.log("Response from server:", res);
     

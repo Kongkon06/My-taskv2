@@ -8,7 +8,7 @@ export const Daily = new Hono<{
     }
 }>();
 
-Daily.post('/',async (c) => {
+Daily.post('/create',async (c) => {
     const body =await c.req.json();
     try {
         const prisma = new PrismaClient({
@@ -18,6 +18,7 @@ Daily.post('/',async (c) => {
            data:{
             title:body.title,
             description:body.description,
+            userId:body.userId
         }})
         return c.json(Daily)
     }catch(e){
@@ -44,13 +45,13 @@ Daily.post('/update', async (c) => {
             },
             update: {
                 completed: body.status,
-                todoId: 1,
+                todoId: body.id,
             },
             create: {
                 dailyTaskId: body.id,
                 date: startOfDay,
                 completed: body.status,
-                todoId: 1,
+                todoId: body.id,
             },
         });
 
@@ -61,7 +62,8 @@ Daily.post('/update', async (c) => {
     }
 });
 
-Daily.get('/',async (c)=>{
+Daily.post('/',async (c)=>{
+    const body = await c.req.json();
     const prisma = new PrismaClient({
         datasourceUrl:c.env.DATABASE_URL
     }).$extends(withAccelerate());
@@ -70,15 +72,11 @@ const startOfDay = new Date(today.setHours(0, 0, 0, 0)); // Set time to start of
 const endOfDay = new Date(today.setHours(23, 59, 59, 999));
     try{
         const daily = await prisma.dailytask.findMany({
+            where:{
+                userId:body.userId
+            },
             include: {
-                completions: {
-                  where: {
-                    date: {
-                      gte: startOfDay,
-                      lte: endOfDay,
-                    },
-                  },
-                },
+                completions: true
               },
         });
         if(daily){

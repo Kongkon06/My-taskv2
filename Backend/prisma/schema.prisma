@@ -9,6 +9,7 @@ datasource db {
 
 model Todo {
   id          Int      @id @default(autoincrement())
+  userId      Int      @default(1)
   parentId    Int?     
   name        String   @db.VarChar(255)
   description String?
@@ -17,9 +18,9 @@ model Todo {
   updatedAt   DateTime @updatedAt
 
   parent      Todo?    @relation("SubTodos", fields: [parentId], references: [id], onDelete: Cascade)
+  user        User     @relation("Todos", fields: [userId], references: [id], onDelete: Cascade)
   subTodos    Todo[]   @relation("SubTodos")
 }
-
 
 model Completion {
   id            Int        @id @default(autoincrement())
@@ -42,6 +43,16 @@ model Dailytask {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
+  userId       Int           @default(1)
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade) // Relation to User
   completions  Completion[]
 }
 
+model User {
+  id          Int       @id @default(autoincrement())
+  username    String    @db.VarChar(255) @unique
+  password    String    
+  email       String    @unique
+  todos       Todo[]    @relation("Todos")  
+  dailyTasks  Dailytask[] 
+}

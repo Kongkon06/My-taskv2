@@ -8,13 +8,15 @@ export const Todos = new Hono<{
     }
 }>();
 
-Todos.get('/Parent',async (c) => {
+Todos.post('/Parent',async (c) => {
+    const body =await c.req.json()
     try {
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate());
         const Todos =await prisma.todo.findMany({
             where:{
+                userId:body.id,
                 parentId:null
             },
             include:{

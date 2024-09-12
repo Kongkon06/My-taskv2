@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { isOpen, currentid, dailyatom } from "../Atoms/Atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isOpen, currentid, dailyatom, parentid } from "../Atoms/Atoms";
 import { DATABASE_URL } from "../config";
 export function Editpanel() {
     const [name, setName] = useState("");
+    const user = useRecoilValue(parentid);
     const [description, setDescription] = useState("");
     const setdaily = useSetRecoilState(dailyatom);
     const  setIsOpen = useSetRecoilState(isOpen('Editpanel'));
@@ -17,9 +18,10 @@ export function Editpanel() {
         }
     
         try {
-            const res = await axios.post(`${DATABASE_URL}/api/v2/Daily`, {
+            const res = await axios.post(`${DATABASE_URL}/api/v2/Daily/create`, {
                 title: name,
                 description: description,
+                userId:user
             });
             console.log("Response from server:", res);
     

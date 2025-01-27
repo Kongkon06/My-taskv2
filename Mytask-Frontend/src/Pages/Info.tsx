@@ -12,7 +12,7 @@ export function Info({ parentId }: { parentId?: number }) {
     const [currentId,setcurent] = useRecoilState(currentid); // Get the current ID from Recoil
     const user = useRecoilValue(parentid);
     const resolvedParentId = parentId !== undefined ? parentId : currentId;
-
+    const [drop,setdrop] = useRecoilState(isOpen("Drop"));
     useEffect(() => {
         console.log("Inside Info resolvedParentId:", resolvedParentId); // Log to ensure resolvedParentId is correct
     }, [resolvedParentId]);
@@ -32,14 +32,12 @@ export function Info({ parentId }: { parentId?: number }) {
                 parentId: resolvedParentId===0?null:resolvedParentId // Use resolvedParentId here
             });
             console.log("Response from server:", res);
-    
-            // Check if parentId is undefined before updating the todo state
             if (resolvedParentId === 0) {
                 setTodo(prevTodos => [...prevTodos, res.data]);
             }else{
-                setchild(prevTodos => [...prevTodos, res.data]);
+                if(drop){setdrop(false);}
+                else{setchild(prevTodos => [...prevTodos, res.data]);}
             }
-    
             setIsOpen(false);
         } catch (error) {
             console.error("Error adding task:", error);

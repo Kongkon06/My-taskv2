@@ -10,7 +10,6 @@ export default function Hook({ fn, del, name ,id }: { fn: () => void;del: () => 
   const setCurr = useSetRecoilState(currentid);
   function handleOnClick() {
     if (isLongPress.current) {
-      console.log('It is longpress');
       return;
     }
     fn();
@@ -21,24 +20,20 @@ export default function Hook({ fn, del, name ,id }: { fn: () => void;del: () => 
     if (timerRef.current !== null) { // Type guard to check if timerRef.current is not null
       clearTimeout(timerRef.current);
     }
-    console.log('OnMouseUp');
   }
 
   function handleOnMouseDown() {
     startPress();
-    console.log('OnMouseDown');
   }
 
   function handleOnTouchStart() {
     startPress();
-    console.log('TouchStart');
   }
 
   function handleOnTouchEnd() {
     if (timerRef.current !== null) { // Type guard to check if timerRef.current is not null
       clearTimeout(timerRef.current);
     }
-    console.log('TouchEnd');
   }
 
   function startPress() {

@@ -5,7 +5,8 @@ import { Info } from "../Pages/Info";
 
 export function Threedots({ parentId }: { parentId?: number }) {
     const [isMultiDropdownOpen, setIsMultiDropdownOpen] = useState(false);
-    const [ eso ,set] =  useRecoilState(isOpen('Addbutton'))
+    const [ eso ,set] =  useRecoilState(isOpen('Addbutton'));
+    const setdrop = useSetRecoilState(isOpen('Drop'));
     const  setCurr = useSetRecoilState(currentid);
   
     const toggleMultiDropdown = () => {
@@ -14,6 +15,7 @@ export function Threedots({ parentId }: { parentId?: number }) {
 
       const toggleeso = () => {
         set(!eso);
+        setdrop(true);
         setCurr(parentId || 0);
       };
 

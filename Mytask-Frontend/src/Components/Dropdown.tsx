@@ -1,19 +1,20 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isOpen } from "../Atoms/Atoms";
 import { Info } from "../Pages/Info";
 
 export function Dropdown({del}:{del: () => void}) {
   // State management for dropdown and modals
   const [isInfoOpen, setIsInfoOpen] = useRecoilState(isOpen('Addbutton'));
+  const setdrop = useSetRecoilState(isOpen('Drop'));
 
   // Handlers to toggle state
   const toggleInfo = () => {
+    setdrop(true);
     setIsInfoOpen(!isInfoOpen);
   };
 
   return (
     <div className="w-full relative inline-block text-left">
-      {/* Dropdown Menu */}
       <div
         id="multi-dropdown"
         className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute mt-2"

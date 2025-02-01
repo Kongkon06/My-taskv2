@@ -11,7 +11,16 @@ export default {
     },
   screens:{
     'mobile': '640px',
+  },
+  objectPosition: {
+    'custom': '40% 75%'
   }},
   },
   plugins: [],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
 }

@@ -50,7 +50,7 @@ const GitHubContributions = () => {
   const activeCount = contributions.filter(day => day.count > 0).length;
 
   return (
-    <div className="w-full max-w-2xl rounded-lg border border-gray-200 bg-white p-4">
+    <div className="w-full rounded-lg border border-gray-200 bg-white p-4">
       <div className="mb-4">
         <div className="flex items-center gap-2 text-lg font-semibold">
           <Calendar className="w-5 h-5" />

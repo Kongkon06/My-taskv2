@@ -1,45 +1,38 @@
 import { useRecoilValue } from "recoil";
 import { Appbar } from "../Components/Appbar";
 import { childatom, todoatom } from "../Atoms/Atoms";
-import { Todo } from "../Components/Todo";
-
+import { NewSidebar } from "../Components/NewSidebar";
+import { NewAppbar } from "../Components/NewAppbar";
+import CarouselCustomNavigation from "../Components/HeroSlider";
 export function Completed() {
   const todo = useRecoilValue(todoatom);
   const child = useRecoilValue(childatom);
-    const com = todo.filter((task) => task.status === true);
-  return (
-    <div className="bg-indigo-950">
-      <Appbar />
-      <div className="bg-indigo-950 h-screen p-4 font-dm-sans">
-        
-        <div className="mobile:text-md lg:text-4xl text-white">Parents:</div>
-        <div>
-            {com.length === 0? <div className=" lg:text-3xl font-italic text-red-700 p-3">Null</div> : <div className="grid grid-cols-2 px-2 gap-2 sm:grid-cols-2 sm:gap-2 sm:grid-rows-2 lg:grid-cols-5 lg:gap-2">{
-             com.map((task) => (
-                <Todo
-                  key={task.id}
-                  name={task.name}
-                  id={task.id}
-                  status={task.status}
-                  fn={() => {}}
-                  del={() => {}}
-                />
-              ))}</div>}
+  const com = todo.filter((task) => task.status === true);
+
+  return <div className="bg-indigo-950 h-screen">
+    <NewAppbar/>
+    <div className="x-4 py-8 h-full flex">
+      <div className="w-1/5 h-full bg-red-300 mr-8">
+        <NewSidebar />
+      </div>
+      <div className="bg-indigo-950 grid grid-cols-5 grid-rows-7 gap-4 w-4/5 h-full font-dm-sans">
+        <div className="col-span-2 row-span-3 flex justify-center rounded-lg text-2xl font-semibold bg-slate-300 p-4" >
+          Task Streak
         </div>
-        <div className="mobile:text-md lg:text-4xl text-white  pb-3">Children/Single-tasks:</div>
-        <div className="grid grid-cols-2 px-2 gap-2 sm:grid-cols-2 sm:gap-2 sm:grid-rows-2 lg:grid-cols-5 lg:gap-2">
-          {child.map((task) => task.status && (
-            <Todo
-              key={task.id}
-              name={task.name}
-              id={task.id}
-              status={task.status}
-              fn={() => {}}
-              del={() => {}}
-            />
-          ))}
+        <div className="col-span-3 row-span-4 bg-slate-300 rounded-lg p-4" >
+          <div className="flex justify-between items-center">
+            Hero Slider
+            <div className="px-4 py-2 text-slate-200 bg-slate-900">Goal</div>
+          </div>
+          <CarouselCustomNavigation/>
+        </div>
+        <div className="col-span-2 row-span-4 bg-red-300 p-4 rounded-lg" >
+          Todays Progress</div>
+        <div className="col-span-3 row-span-3 bg-red-300 p-4 rounded-lg" >
         </div>
       </div>
+
     </div>
-  );
+  </div>
 }
+

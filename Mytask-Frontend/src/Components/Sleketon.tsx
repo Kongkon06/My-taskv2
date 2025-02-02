@@ -1,4 +1,4 @@
-import { Appbar } from "./Appbar";
+import { AppBar } from "./Appbar";
 
 export function Skeleton() {
     return (
@@ -20,7 +20,7 @@ export function Skeleton() {
 export function SubSkeleton() {
     return (
         <div className="w-full h-screen bg-slate-900">
-            <Appbar/>
+            <AppBar/>
             <div className=" grid grid-cols-2 px-2 gap-2 sm:grid-cols-2 sm:gap-2 sm:grid-rows-2 lg:grid-cols-5 lg:gap-2">
                 <div className="animate-pulse flex justify-center items-center bg-indigo-800 font-dm-sans rounded-md font-semibold p-2 w-full mobile:h-auto lg:h-48 lg:text-2xl">
                     <Dots />

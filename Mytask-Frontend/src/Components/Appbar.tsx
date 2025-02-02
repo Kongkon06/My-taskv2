@@ -1,20 +1,24 @@
-import { useNavigate } from "react-router-dom"
-import DrawerNavigation from "./Sidebar";
-import { useRecoilState } from "recoil";
-import { parentid } from "../Atoms/Atoms";
+import type React from "react"
+import { Bell, Search, User } from "lucide-react"
+import { Input } from "./ui/input" 
+import { Button } from "./ui/button" 
 
-export const Appbar = ()=>{
-    const navigate = useNavigate();
-    const [userid,setid] = useRecoilState(parentid);
-    return<div  className="w-sm flex justify-between items-center mb-5 p-2 border-b border-blue-800 bg-slate-950 p-2 sm:w-full border-b bg-indigo-950 flex justify-center ">
-        <div className="w-md"><DrawerNavigation/></div>
-        <div onClick={()=>{navigate('/')}} className=" font-semibold text-white cursor-pointer font-dm-sans md:text-lg lg:text-3xl">My Task</div>
-        <div role="button" onClick={()=>{
-            if(userid === 0){
-                setid(0)
-            }
-            navigate('/signin');
-
-        }} className="w-md font-dm-sans rounded-3xl bg-slate-700 mr-2 px-2 py-1 text-md font-semibold text-white cursor-pointer">{userid === 0?"Signin":"Logout"}</div>
-    </div>
+export const AppBar: React.FC = () => {
+  return (
+    <header className="bg-background border-b p-4 flex items-center justify-between">
+      <div className="flex items-center w-1/3">
+        <Search className="h-5 w-5 text-muted-foreground mr-2" />
+        <Input type="search" placeholder="Search..." className="w-full" />
+      </div>
+      <div className="flex items-center space-x-4">
+        <Button variant="ghost" size="icon">
+          <Bell className="h-5 w-5" />
+        </Button>
+        <Button variant="ghost" size="icon">
+          <User className="h-5 w-5" />
+        </Button>
+      </div>
+    </header>
+  )
 }
+

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState  } from "recoil";
 import { childatom } from "../Atoms/Atoms";
-import { Appbar } from "../Components/Appbar";
+import { AppBar } from "../Components/Appbar";
 import { DATABASE_URL } from "../config"
 import { SubSkeleton } from "../Components/Sleketon";
 export function Subtodo(){
@@ -62,7 +62,7 @@ export function Subtodo(){
     </div>
   }
     return <div className="w-full h-screen bg-slate-900">
-      <Appbar/>
+      <AppBar/>
         <div className="mt-7 grid grid-cols-2 px-2 gap-2 sm:grid-cols-2 sm:gap-2 sm:grid-rows-2 lg:grid-cols-5 lg:gap-2">
         {child.map((task) => (
             <Todo

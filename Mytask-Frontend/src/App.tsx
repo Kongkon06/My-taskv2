@@ -11,6 +11,7 @@ import { NewHome } from './Pages/NewHome'
 import GitHubContributions from './Components/GitContri'
 import { NewSlider } from './Pages/NewSlider'
 import WeeklyProgressTracker from './Components/WeeklyTracker'
+import { CalendarView } from './Components/CalenderView'
 function App() {
 
 
@@ -23,7 +24,7 @@ function App() {
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/subtodo/:id' element={<Subtodo/>}/>
       <Route path='/completed' element={<Completed/>}/>
-      <Route path='/calendar' element={<Calc/>}/>
+      <Route path='/calendar' element={<CalendarView/>}/>
       <Route path='/' element={<NewHome/>}/>
       <Route path='/contri' element={<GitHubContributions/>}/>
       <Route path='/area' element={<WeeklyProgressTracker/>}/>

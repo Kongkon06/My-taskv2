@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
-import { Card, CardContent } from './ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
   // Convert progress to normalized value
   const normalizedProgress = Math.min(Math.max(progress, 0), 100);
   
   return (
-    <Card className='w-full max-w-sm mx-auto '>
+    <Card className='w-full max-w-sm mx-auto bg-slate-900'>
         <CardContent className='flex flex-col items-center'>
-    <div className="w-64 h-64 mt- relative">
+        <CardHeader className=' text-white'>Total Task completed today</CardHeader>
+    <div className="w-64 h-64 relative">
       {/* Container */}
       <div className="absolute inset-0 bg-white rounded-full border overflow-hidden">
         {/* SVG for water animation */}
@@ -96,7 +97,7 @@ const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
           <span className="text-3xl font-bold text-gray-800">
             {completed}/{total}
           </span>
-          <span className="text-sm text-gray-600 mt-1">
+          <span className="text-sm text-gray-900 mt-1">
             {normalizedProgress.toFixed(1)}% completed
           </span>
         </div>

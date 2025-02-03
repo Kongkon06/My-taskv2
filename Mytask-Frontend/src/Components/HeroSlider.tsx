@@ -5,8 +5,7 @@ import GitHubContributions from './GitContri';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Sample carousel items - replace with your own content
+
   const items = [
     {
       component: <GitHubContributions />,

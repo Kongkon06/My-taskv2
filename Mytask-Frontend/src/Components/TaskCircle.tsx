@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardHeader} from './ui/card';
 
 const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
   // Convert progress to normalized value

@@ -1,8 +1,5 @@
-import { useRecoilValue } from "recoil";
 import { AppBar } from "../Components/Appbar";
-import { childatom, todoatom } from "../Atoms/Atoms";
 import { Sidebar } from "../Components/Sidebar";
-import CarouselCustomNavigation from "../Components/HeroSlider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Award, Calendar, CheckCircle, Target, TrendingUp } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"

@@ -1,7 +1,6 @@
 import { Sidebar } from "@/Components/Sidebar"
 import { AppBar } from "@/Components/Appbar" 
 import GitHubContributions from '@/Components/GitContri';
-import { WeeklyProgress } from "@/Components/WeeklyProgress"
 import { TaskList } from "@/Components/TaskList"
 import { Analytics } from "@/Components/Analytics"
 import { Button } from "@/Components/ui/button"

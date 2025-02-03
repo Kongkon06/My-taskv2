@@ -1,38 +1,168 @@
 import { useRecoilValue } from "recoil";
-import { Appbar } from "../Components/Appbar";
+import { AppBar } from "../Components/Appbar";
 import { childatom, todoatom } from "../Atoms/Atoms";
-import { NewSidebar } from "../Components/NewSidebar";
-import { NewAppbar } from "../Components/NewAppbar";
+import { Sidebar } from "../Components/Sidebar";
 import CarouselCustomNavigation from "../Components/HeroSlider";
-export function Completed() {
-  const todo = useRecoilValue(todoatom);
-  const child = useRecoilValue(childatom);
-  const com = todo.filter((task) => task.status === true);
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Award, Calendar, CheckCircle, Target, TrendingUp } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { Progress } from "@radix-ui/react-progress";
+const taskCompletionData = [
+  { name: "Mon", completed: 5 },
+  { name: "Tue", completed: 8 },
+  { name: "Wed", completed: 6 },
+  { name: "Thu", completed: 9 },
+  { name: "Fri", completed: 7 },
+  { name: "Sat", completed: 4 },
+  { name: "Sun", completed: 3 },
+]
 
-  return <div className="bg-indigo-950 h-screen">
-    <NewAppbar/>
-    <div className="x-4 py-8 h-full flex">
-      <div className="w-1/5 h-full bg-red-300 mr-8">
-        <NewSidebar />
-      </div>
-      <div className="bg-indigo-950 grid grid-cols-5 grid-rows-7 gap-4 w-4/5 h-full font-dm-sans">
-        <div className="col-span-2 row-span-3 flex justify-center rounded-lg text-2xl font-semibold bg-slate-300 p-4" >
+const TaskCompletionRate: React.FC = () => {
+  const totalTasks = 100
+  const completedTasks = 75
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <CheckCircle className="w-5 h-5" />
+          Overall Task Completion
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="text-3xl font-bold mb-2">
+          {completedTasks}/{totalTasks}
+        </div>
+        <Progress value={(completedTasks / totalTasks) * 100} className="h-2" />
+        <p className="text-sm text-muted-foreground mt-2">
+          {((completedTasks / totalTasks) * 100).toFixed(1)}% of all tasks completed
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+const TaskStreak: React.FC = () => {
+  const currentStreak = 7
+  const longestStreak = 14
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Award className="w-5 h-5" />
           Task Streak
-        </div>
-        <div className="col-span-3 row-span-4 bg-slate-300 rounded-lg p-4" >
-          <div className="flex justify-between items-center">
-            Hero Slider
-            <div className="px-4 py-2 text-slate-200 bg-slate-900">Goal</div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex justify-between">
+          <div>
+            <div className="text-3xl font-bold">{currentStreak}</div>
+            <p className="text-sm text-muted-foreground">Current Streak</p>
           </div>
-          <CarouselCustomNavigation/>
+          <div>
+            <div className="text-3xl font-bold">{longestStreak}</div>
+            <p className="text-sm text-muted-foreground">Longest Streak</p>
+          </div>
         </div>
-        <div className="col-span-2 row-span-4 bg-red-300 p-4 rounded-lg" >
-          Todays Progress</div>
-        <div className="col-span-3 row-span-3 bg-red-300 p-4 rounded-lg" >
-        </div>
-      </div>
+      </CardContent>
+    </Card>
+  )
+}
 
+const MonthlyProgress: React.FC = () => {
+  const completedThisMonth = 87
+  const totalThisMonth = 120
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Calendar className="w-5 h-5" />
+          Monthly Progress
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="text-3xl font-bold mb-2">
+          {completedThisMonth}/{totalThisMonth}
+        </div>
+        <Progress value={(completedThisMonth / totalThisMonth) * 100} className="h-2" />
+        <p className="text-sm text-muted-foreground mt-2">
+          {((completedThisMonth / totalThisMonth) * 100).toFixed(1)}% of monthly tasks completed
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+const WeeklyTaskCompletion: React.FC = () => {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <TrendingUp className="w-5 h-5" />
+          Weekly Task Completion
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[300px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={taskCompletionData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="completed" fill="hsl(var(--primary))" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+const ProductivityScore: React.FC = () => {
+  const score = 85
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Target className="w-5 h-5" />
+          Productivity Score
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="text-5xl font-bold text-center mb-2">{score}</div>
+        <Progress value={score} className="h-2" />
+        <p className="text-sm text-muted-foreground mt-2 text-center">
+          Your productivity score based on task completion and consistency
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+export function Completed(){
+  return (
+    <div className="flex h-screen bg-background">
+      <Sidebar />
+      <div className="flex flex-col flex-1">
+        <AppBar />
+        <main className="flex-1 p-6 overflow-auto">
+          <h1 className="text-3xl font-bold mb-6">Task Report & Analytics</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <TaskCompletionRate />
+            <TaskStreak />
+            <MonthlyProgress />
+            <ProductivityScore />
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+              <WeeklyTaskCompletion />
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-  </div>
+  )
 }
 

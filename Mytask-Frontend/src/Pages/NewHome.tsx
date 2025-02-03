@@ -1,6 +1,6 @@
 import { Sidebar } from "@/Components/Sidebar"
 import { AppBar } from "@/Components/Appbar" 
-import { TaskStats } from "@/Components/TaskStats"
+import GitHubContributions from '@/Components/GitContri';
 import { WeeklyProgress } from "@/Components/WeeklyProgress"
 import { TaskList } from "@/Components/TaskList"
 import { Analytics } from "@/Components/Analytics"
@@ -23,7 +23,7 @@ export function NewHome() {
               </Button>
             </div>
             <div className="col-span-4">
-              <WeeklyProgress />
+              <GitHubContributions />
             </div>
             <div className="col-span-2 flex justify-center items-center">
             <TaskProgressCircle progress={62.5} total={8} completed={5} />

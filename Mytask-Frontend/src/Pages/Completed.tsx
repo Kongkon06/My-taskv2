@@ -5,6 +5,7 @@ import { Award, Calendar, CheckCircle, Target, TrendingUp } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { Progress } from "@radix-ui/react-progress";
 import GitHubContributions from "@/Components/GitContri";
+import WeeklyProgress from "@/Components/WeeklyProgress";
 const taskCompletionData = [
   { name: "Mon", completed: 5 },
   { name: "Tue", completed: 8 },
@@ -153,9 +154,7 @@ export function Completed(){
             <TaskStreak />
             <MonthlyProgress />
             <GitHubContributions />
-            <div className="col-span-1 md:col-span-2 lg:col-span-3">
-              <WeeklyTaskCompletion />
-            </div>
+            <div className="col-span-2"><WeeklyProgress /></div>
           </div>
         </main>
       </div>

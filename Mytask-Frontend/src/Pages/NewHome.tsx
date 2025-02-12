@@ -7,6 +7,7 @@ import { Button } from "@/Components/ui/button"
 import { PlusCircle } from "lucide-react"
 import TaskProgressCircle from "@/Components/TaskCircle"
 import Goals from "@/Components/Goals";
+import WeeklyProgress from "@/Components/WeeklyProgress";
 
 export function NewHome() {
   return (
@@ -23,7 +24,7 @@ export function NewHome() {
               </Button>
             </div>
             <div className="col-span-4">
-              <GitHubContributions />
+              <WeeklyProgress/>
             </div>
             <div className="col-span-2 flex justify-center items-center">
             <TaskProgressCircle progress={62.5} total={8} completed={5} />
@@ -34,9 +35,6 @@ export function NewHome() {
             </div>
             <div className="col-span-3 h-64">
               <Goals />
-            </div>
-            <div className="col-span-3">
-              <Analytics />
             </div>
           </div>
         </main>

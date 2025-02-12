@@ -10,6 +10,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Badge } from "./ui/badge"
 import { CheckCircle2, Circle } from "lucide-react"
+import { Sidebar } from "./Sidebar"
 
 // Setup localizer for react-big-calendar
 const locales = {
@@ -92,7 +93,9 @@ export const CalendarView: React.FC = () => {
   }
 
   return (
-    <Card className="w-full">
+    <div className="flex">
+      <Sidebar></Sidebar>
+      <Card className="w-full">
       <CardHeader>
         <CardTitle>Task Calendar</CardTitle>
       </CardHeader>
@@ -111,6 +114,7 @@ export const CalendarView: React.FC = () => {
         {selectedDate && <TaskList date={selectedDate} />}
       </CardContent>
     </Card>
+    </div>
   )
 }
 

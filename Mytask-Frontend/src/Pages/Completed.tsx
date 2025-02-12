@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Award, Calendar, CheckCircle, Target, TrendingUp } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { Progress } from "@radix-ui/react-progress";
+import GitHubContributions from "@/Components/GitContri";
 const taskCompletionData = [
   { name: "Mon", completed: 5 },
   { name: "Tue", completed: 8 },
@@ -145,14 +146,13 @@ export function Completed(){
     <div className="flex h-screen bg-background">
       <Sidebar />
       <div className="flex flex-col flex-1">
-        <AppBar />
         <main className="flex-1 p-6 overflow-auto">
           <h1 className="text-3xl font-bold mb-6">Task Report & Analytics</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <TaskCompletionRate />
             <TaskStreak />
             <MonthlyProgress />
-            <ProductivityScore />
+            <GitHubContributions />
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
               <WeeklyTaskCompletion />
             </div>

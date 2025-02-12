@@ -14,7 +14,7 @@ export const TaskList: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Task List</CardTitle>
+        <CardTitle>Daily Tasks</CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="space-y-4">

@@ -6,6 +6,7 @@ import { Analytics } from "@/Components/Analytics"
 import { Button } from "@/Components/ui/button"
 import { PlusCircle } from "lucide-react"
 import TaskProgressCircle from "@/Components/TaskCircle"
+import Goals from "@/Components/Goals";
 
 export function NewHome() {
   return (
@@ -28,8 +29,11 @@ export function NewHome() {
             <TaskProgressCircle progress={62.5} total={8} completed={5} />
             </div>
             {/* Second row */}
-            <div className="col-span-5">
+            <div className="col-span-2">
               <TaskList />
+            </div>
+            <div className="col-span-3 h-64">
+              <Goals />
             </div>
             <div className="col-span-3">
               <Analytics />

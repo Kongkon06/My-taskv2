@@ -1,20 +1,9 @@
-import { AppBar } from "../Components/Appbar";
 import { Sidebar } from "../Components/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import { Award, Calendar, CheckCircle, Target, TrendingUp } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { Award, Calendar, CheckCircle } from "lucide-react";
 import { Progress } from "@radix-ui/react-progress";
 import GitHubContributions from "@/Components/GitContri";
 import WeeklyProgress from "@/Components/WeeklyProgress";
-const taskCompletionData = [
-  { name: "Mon", completed: 5 },
-  { name: "Tue", completed: 8 },
-  { name: "Wed", completed: 6 },
-  { name: "Thu", completed: 9 },
-  { name: "Fri", completed: 7 },
-  { name: "Sat", completed: 4 },
-  { name: "Sun", completed: 3 },
-]
 
 const TaskCompletionRate: React.FC = () => {
   const totalTasks = 100
@@ -88,54 +77,6 @@ const MonthlyProgress: React.FC = () => {
         <Progress value={(completedThisMonth / totalThisMonth) * 100} className="h-2" />
         <p className="text-sm text-muted-foreground mt-2">
           {((completedThisMonth / totalThisMonth) * 100).toFixed(1)}% of monthly tasks completed
-        </p>
-      </CardContent>
-    </Card>
-  )
-}
-
-const WeeklyTaskCompletion: React.FC = () => {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <TrendingUp className="w-5 h-5" />
-          Weekly Task Completion
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={taskCompletionData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="completed" fill="hsl(var(--primary))" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-const ProductivityScore: React.FC = () => {
-  const score = 85
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Target className="w-5 h-5" />
-          Productivity Score
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="text-5xl font-bold text-center mb-2">{score}</div>
-        <Progress value={score} className="h-2" />
-        <p className="text-sm text-muted-foreground mt-2 text-center">
-          Your productivity score based on task completion and consistency
         </p>
       </CardContent>
     </Card>

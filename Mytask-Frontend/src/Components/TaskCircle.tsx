@@ -8,8 +8,8 @@ const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
   return (
     <Card className='w-full max-w-sm mx-auto bg-slate-900'>
         <CardContent className='flex flex-col items-center'>
-        <CardHeader className=' text-white'>Total Task completed today</CardHeader>
-    <div className="w-64 h-64 relative">
+        <CardHeader className=' text-white p-4'>Total Task completed today</CardHeader>
+    <div className="w-56 h-56 relative">
       {/* Container */}
       <div className="absolute inset-0 bg-white rounded-full border overflow-hidden">
         {/* SVG for water animation */}

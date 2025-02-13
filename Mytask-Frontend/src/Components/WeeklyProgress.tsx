@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 
 const WeeklyProgress = () => {
-  const days = ["Mon", "Tues", "Wed", "Thurs", "Fri"];
+  const days = ["Mon", "Tues", "Wed", "Thurs", "Fri","Sat","Sun"];
   const goals = ["Goal 1", "Goal 2", "Goal 3", "Goal 4"];
   
   // Generate random status for demonstration
@@ -20,7 +20,7 @@ const WeeklyProgress = () => {
         <CardTitle className="text-center mb-4">Weekly Progress</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-6 gap-x-1 gap-y-4 items-center">
+        <div className="grid grid-cols-8 gap-y-4 items-center">
           <div className="h-6 w-12"></div>
           {days.map((day, index) => (
             <div key={index} className="text-center font-medium text-sm">
@@ -36,7 +36,7 @@ const WeeklyProgress = () => {
                 return (
                   <div
                     key={`${goalIndex}-${dayIndex}`}
-                    className="relative h-5 w-full"
+                    className="relative h-4 w-full"
                   >
                     <div
                       className={`absolute inset-0 transform hover:scale-105 transition-transform duration-200 ${getStatusColor(status)}`}

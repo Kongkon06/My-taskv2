@@ -1,17 +1,43 @@
-import { AppBar } from "../Components/Appbar"
-import { Dailypage } from "./DailyList"
-import { Todos } from "./Todos"
+import { Sidebar } from "@/Components/Sidebar"
+import { AppBar } from "@/Components/Appbar" 
+import { TaskList } from "@/Components/TaskList"
+import { Button } from "@/Components/ui/button"
+import { PlusCircle } from "lucide-react"
+import TaskProgressCircle from "@/Components/TaskCircle"
+import Goals from "@/Components/GoalsList";
+import WeeklyProgress from "@/Components/WeeklyProgress";
 
-export function Home(){
-    return <div className="w-full h-screen bg-slate-900">
-        <AppBar/>
-        <div className="grid grid-cols-2 mobile:grid-cols-2 lg:grid-cols-6 pr-2">
-            <div className="col-span-1 sm:col-span-1 lg:col-span-5">
-            <Todos/>
+export function NewHome() {
+  return (
+    <div className="flex h-screen bg-background">
+      <Sidebar />
+      <div className="flex flex-col flex-1">
+        <AppBar />
+        <main className="flex-1 p-6 overflow-auto">
+          <div className="grid grid-cols-8 gap-6">
+            {/* First row */}
+            <div className="col-span-2 space-y-4 h-full">
+              <Button className="w-full text-3xl font-dm-sans h-full">
+                <PlusCircle className="mr" /> Add Task
+              </Button>
             </div>
-            <div className="col-span-1">
-                <Dailypage/>
+            <div className="col-span-4">
+              <WeeklyProgress/>
             </div>
-        </div>
+            <div className="col-span-2 flex justify-center items-center">
+            <TaskProgressCircle progress={62.5} total={8} completed={5} />
+            </div>
+            {/* Second row */}
+            <div className="col-span-3">
+              <Goals />
+            </div>
+            <div className="col-span-3 h-64">
+              <TaskList />
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
+  )
 }
+

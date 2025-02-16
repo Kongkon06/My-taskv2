@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -13,6 +13,10 @@ import ReactFlow, {
 } from 'reactflow';
 import { Plus } from 'lucide-react';
 import "reactflow/dist/style.css";
+import axios from 'axios';
+import { DATABASE_URL } from '@/config';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { childatom, parentid, todoatom } from '@/Atoms/Atoms';
 
 const nodeTypes = [
   "Principled BSDF",
@@ -23,30 +27,39 @@ const nodeTypes = [
   "Material Output"
 ];
 
+const userEdges=[
+  { id: "e1-2", source: "1", target: "2", animated: true, className: 'stroke-red' },
+]
+const userNodes=[{
+  id:"1",
+data:{label:"Uni"},
+position:{x: 450, y:0},
+className: 'bg-purple-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
+}]
 const initialNodes = [
   { 
     id: "1", 
     type: "input", 
     data: { label: "Principled BSDF" }, 
-    position: { x: 50, y: 50 },
+    position: { x: 450, y: 0 },
     className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
   },
   { 
     id: "2", 
     data: { label: "Shader to RGB" }, 
-    position: { x: 250, y: 50 },
+    position: { x: 250, y: 100 },
     className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
   },
   { 
     id: "3", 
     data: { label: "Color Ramp" }, 
-    position: { x: 450, y: 50 },
+    position: { x: 250, y: 250 },
     className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
   },
   { 
     id: "4", 
     data: { label: "Noise Texture" }, 
-    position: { x: 250, y: 150 },
+    position: { x: 250, y: 250 },
     className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
   },
   { 
@@ -59,24 +72,80 @@ const initialNodes = [
     id: "6", 
     type: "output", 
     data: { label: "Material Output" }, 
-    position: { x: 650, y: 100 },
+    position: { x: 650, y: 200 },
     className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
+  },{ 
+    id: "7", 
+    type: "output", 
+    data: { label: "Material Output" }, 
+    position: { x: 650, y: 100 },
+    className: 'bg-purple-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
   },
 ];
 
 const initialEdges = [
-  { id: "e1-2", source: "1", target: "2", animated: true, className: 'stroke-white' },
+  { id: "e1-2", source: "1", target: "2", animated: true, className: 'stroke-red' },
   { id: "e2-3", source: "2", target: "3", animated: true, className: 'stroke-white' },
   { id: "e3-6", source: "3", target: "6", animated: true, className: 'stroke-white' },
   { id: "4-5", source: "4", target: "5", animated: true, className: 'stroke-white' },
   { id: "5-6", source: "5", target: "6", animated: true, className: 'stroke-white' },
+  { id: "1-7", source: "1", target: "7", animated: true, className: 'stroke-white' },
 ];
 
 const ShaderNodeFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState(userNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);  
   const [selectedNode, setSelectedNode] = useState(nodeTypes[0]);
+  const userid = useRecoilValue(parentid);
+  const [todo,settodo]= useRecoilState(todoatom);
+  const [child , setchild] = useRecoilState(childatom);
 
+  async function fetchNodes() {
+    try {
+      const response = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, {
+        parentId: 28,
+      });
+  
+      const newChildren = response.data.Todos;
+      setchild(newChildren);
+  
+      setNodes((prevNodes) => [
+        ...prevNodes,
+        ...newChildren.map((data: any) => ({
+          id: data.id.toString(),
+          data: { label: data.name },
+          position: { x: Math.random() * 600, y: Math.random() * 400 },
+          className: "bg-green-600 text-white rounded-lg border-2 border-gray-600 shadow-lg",
+        })),
+      ]);
+  
+      setEdges((prevEdges) => [
+        ...prevEdges,
+        ...newChildren.map((data: any) => ({
+          id: `e1-${data.id}`,
+          source: "1",
+          target: data.id.toString(),
+          animated: true,
+          className: "stroke-red",
+        })),
+      ]);
+    } catch (error) {
+      console.error("Error fetching nodes:", error);
+    }
+  }
+  
+  useEffect(()=>{
+    axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
+        userId:userid
+    }).then(response=>{
+        settodo(response.data.Todos);
+        console.log(response.data.Todos);
+    })
+},[todoatom,userid]);
+
+useEffect(()=>{
+  fetchNodes();
+},[])
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds) => addEdge({ ...params, animated: true, className: 'stroke-white' }, eds)),
     [setEdges]
@@ -90,7 +159,7 @@ const ShaderNodeFlow = () => {
         x: Math.random() * 500,
         y: Math.random() * 300,
       },
-      className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
+      className: 'bg-purple-700 bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
     };
     setNodes((nds) => [...nds, newNode]);
   }, [nodes, selectedNode, setNodes]);
@@ -132,7 +201,7 @@ const ShaderNodeFlow = () => {
         >
           <Background className="bg-slat-950" />
           <MiniMap 
-            className="bg-slate-950 border-gray-700" 
+            className="bg-slate-800 border-gray-700" 
             nodeColor="#fff"
             maskColor="rgba(55, 65, 81, 0.5)"
           />

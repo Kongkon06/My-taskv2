@@ -8,7 +8,7 @@ import { Signin } from './Pages/Signin'
 import { Signup } from './Pages/Signup'
 import { NewHome } from './Pages/Home'
 import GitHubContributions from './Components/GitContri'
-import WeeklyProgressTracker from './Components/WeeklyTracker'
+import Test from './Components/FancyCard'
 import { CalendarView } from './Components/CalenderView'
 import TaskPlanner from './Pages/TaskStats'
 function App() {
@@ -27,6 +27,7 @@ function App() {
       <Route path='/' element={<NewHome/>}/>
       <Route path='/contri' element={<GitHubContributions/>}/>
       <Route path='/area' element={<TaskPlanner/>}/>
+      <Route path='/test' element={<Test/>}/>
     </Routes>
     </BrowserRouter>
     </RecoilRoot>

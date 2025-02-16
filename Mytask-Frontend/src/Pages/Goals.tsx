@@ -1,91 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { parentid, todoatom } from '@/Atoms/Atoms';
+import Sidebar from '@/Components/Sidebar';
+import { DATABASE_URL } from '@/config';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-export const Home = () => {
-  // Simulated data for demonstration
-  const todo = [
-    { id: 1, name: "Complete project", status: false },
-    { id: 2, name: "Review code", status: true },
-    { id: 3, name: "Write documentation", status: false }
-  ];
-
-  const fetch = (id: number, status: boolean) => console.log('fetch', id, status);
-  const dels = (id: number) => console.log('delete', id);
-
-  return (
-    <div className="w-full min-h-screen bg-black p-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {todo.map((task) => (
-          <Todo
-            key={task.id}
-            name={task.name}
-            id={task.id}
-            status={task.status}
-            fn={() => fetch(task.id, task.status)}
-            del={() => dels(task.id)}
+const GradientCard = () => (
+  <svg 
+    className="absolute w-full" 
+    style={{ 
+      height: '150%',
+      minHeight: '400px'
+    }} 
+    preserveAspectRatio="xMidYMin slice" 
+    viewBox="0 0 283 290" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* SVG content remains the same */}
+    <path
+      d="M0 20C0 8.9543 8.9543 0 20 0H151H216H249.5H263C274.046 0 283 8.95431 283 20V270C283 281.046 274.046 290 263 290H20C8.95431 290 0 281.046 0 270V20Z"
+      fill="url(#paint0_linear_98_2)"
+    />
+    <g clipPath="url(#paint1_angular_98_2_clip_path)">
+      <g transform="matrix(-0.1225 0.178 -0.178 -0.1225 122.5 112)">
+        <foreignObject x="-1085.33" y="-1085.33" width="2170.67" height="2170.67">
+          <div
+            style={{
+              background:
+                "conic-gradient(from 90deg, rgba(166, 20, 44, 0.3158) 0deg, rgba(190, 22, 22, 0.2) 12.8811deg, rgba(19, 0, 127, 1) 61.2748deg, rgba(0, 0, 0, 1) 186.719deg, rgba(28, 2, 173, 1) 283.916deg, rgba(166, 20, 44, 0.3158) 360deg)",
+              height: "100%",
+              width: "100%",
+              opacity: 1,
+            }}
           />
-        ))}
-        <div className="flex justify-center items-center h-full">
-          <button className="w-full h-48 border border-white/20 rounded-lg hover:bg-white/5 transition-colors duration-200 text-white flex items-center justify-center">
-            <span className="text-3xl">+</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+        </foreignObject>
+      </g>
+    </g>
+    <path
+      d="M0 20C0 8.9543 8.9543 0 20 0H110.52C127.089 0 136.472 18.9917 126.405 32.1515L113.28 49.3104C100.44 66.0956 119.02 88.7324 137.986 79.4115L266 16.5C273.235 11.6055 283 16.789 283 25.5244V270C283 281.046 274.046 290 263 290H20C8.95431 290 0 281.046 0 270V20Z"
+    />
+    <defs>
+      <clipPath id="paint1_angular_98_2_clip_path">
+        <path d="M0 20C0 8.9543 8.9543 0 20 0H110.52C127.089 0 136.472 18.9917 126.405 32.1515L113.28 49.3104C100.44 66.0956 119.02 88.7324 137.986 79.4115L266 16.5V16.5C273.235 11.6055 283 16.789 283 25.5244V270C283 281.046 274.046 290 263 290H20C8.95431 290 0 281.046 0 270V20Z" />
+      </clipPath>
+      <linearGradient id="paint0_linear_98_2" x1="150" y1="118.5" x2="422" y2="-179" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#000FB9" />
+        <stop offset="0.295" stopColor="#D1466D" />
+        <stop offset="0.640786" stopColor="#FF0048" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
 
-const Todo = ({ id, name, fn, status, del }: {
+const Todo = ({ name, fn, status }: {
   id: number;
   name: string;
   fn: () => void;
   status: boolean;
-  del: () => void;
 }) => {
   const [isCom, setIsCom] = useState(status);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     setIsCom(status);
   }, [status]);
 
   return (
-    <div
-      className={`${
-        isCom ? 'bg-white text-black' : 'bg-black text-white'
-      } border border-white/20 rounded-lg p-4 h-48 transition-all duration-200 hover:border-white/40`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="h-full flex flex-col">
-        <div className="flex justify-between items-center mb-4">
-          <button
-            onClick={del}
-            className={`p-2 rounded-full transition-colors duration-200 ${
-              isHovered ? (isCom ? 'hover:bg-black/10' : 'hover:bg-white/10') : ''
-            }`}
-          >
-            ×
-          </button>
-          <div className="flex gap-1">
-            <span className="w-1 h-1 rounded-full bg-current" />
-            <span className="w-1 h-1 rounded-full bg-current" />
-            <span className="w-1 h-1 rounded-full bg-current" />
-          </div>
-        </div>
-        
-        <div className="flex-1 flex items-center justify-center">
-          <button
-            onClick={() => {
-              setIsCom(!isCom);
-              fn();
-            }}
-            className="text-xl font-medium text-center hover:opacity-80 transition-opacity duration-200"
-          >
+    <div className="relative h-56 overflow-hidden rounded-3xl">
+      <GradientCard />
+      <button
+        onClick={() => {
+          setIsCom(!isCom);
+          fn();
+        }}
+        className="absolute inset-0 w-full h-full p-4 z-10"
+      >
+        <div className="h-full flex items-center justify-center">
+          <span className="text-xl font-medium text-white text-center hover:opacity-80 transition-opacity duration-200">
             {name}
-          </button>
+          </span>
         </div>
-      </div>
+      </button>
     </div>
   );
 };
+
+export const Home = () => {
+  const userid = useRecoilValue(parentid);
+  const [todo,settodo] = useRecoilState(todoatom);
+  useEffect(()=>{
+    axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
+        userId:userid
+    }).then(response=>{
+        settodo(response.data.Todos);
+        console.log(response.data.Todos);
+    })
+  },[todoatom,userid]);
+
+  const fetch = (id: number, status: boolean) => console.log('fetch', id, status);
+
+  return (
+    <div className="w-full min-h-screen flex bg-black">
+      <Sidebar />
+      <main className="flex-1 p-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {todo.map((task) => (
+            <Todo
+              key={task.id}
+              name={task.name}
+              id={task.id}
+              status={task.status}
+              fn={() => fetch(task.id, task.status)}
+            />
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Home;

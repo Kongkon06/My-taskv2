@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom"
 export const AppBar: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <header className="bg-background border-b p-4 flex items-center justify-between">
+    <header className="bg-black border-b text-white p-4 flex items-center justify-between">
       <div className="flex items-center w-1/3">
-        <Search className="h-5 w-5 text-muted-foreground mr-2" />
+        <Search className="h-5 w-5 mr-2" />
         <Input type="search" placeholder="Search..." className="w-full" />
       </div>
       <div className="flex items-center space-x-4">

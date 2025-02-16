@@ -27,70 +27,12 @@ const nodeTypes = [
   "Material Output"
 ];
 
-const userEdges=[
-  { id: "e1-2", source: "1", target: "2", animated: true, className: 'stroke-red' },
-]
 const userNodes=[{
   id:"1",
 data:{label:"Uni"},
 position:{x: 450, y:0},
 className: 'bg-purple-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
 }]
-const initialNodes = [
-  { 
-    id: "1", 
-    type: "input", 
-    data: { label: "Principled BSDF" }, 
-    position: { x: 450, y: 0 },
-    className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },
-  { 
-    id: "2", 
-    data: { label: "Shader to RGB" }, 
-    position: { x: 250, y: 100 },
-    className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },
-  { 
-    id: "3", 
-    data: { label: "Color Ramp" }, 
-    position: { x: 250, y: 250 },
-    className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },
-  { 
-    id: "4", 
-    data: { label: "Noise Texture" }, 
-    position: { x: 250, y: 250 },
-    className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },
-  { 
-    id: "5", 
-    data: { label: "Displacement" }, 
-    position: { x: 450, y: 150 },
-    className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },
-  { 
-    id: "6", 
-    type: "output", 
-    data: { label: "Material Output" }, 
-    position: { x: 650, y: 200 },
-    className: 'bg-gray-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },{ 
-    id: "7", 
-    type: "output", 
-    data: { label: "Material Output" }, 
-    position: { x: 650, y: 100 },
-    className: 'bg-purple-800 text-white rounded-lg border-2 border-gray-600 shadow-lg'
-  },
-];
-
-const initialEdges = [
-  { id: "e1-2", source: "1", target: "2", animated: true, className: 'stroke-red' },
-  { id: "e2-3", source: "2", target: "3", animated: true, className: 'stroke-white' },
-  { id: "e3-6", source: "3", target: "6", animated: true, className: 'stroke-white' },
-  { id: "4-5", source: "4", target: "5", animated: true, className: 'stroke-white' },
-  { id: "5-6", source: "5", target: "6", animated: true, className: 'stroke-white' },
-  { id: "1-7", source: "1", target: "7", animated: true, className: 'stroke-white' },
-];
 
 const ShaderNodeFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(userNodes);

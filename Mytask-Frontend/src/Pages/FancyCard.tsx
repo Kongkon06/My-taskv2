@@ -1,16 +1,9 @@
-import { Sidebar } from "@/Components/Sidebar"
-import { AppBar } from "@/Components/Appbar" 
-import { TaskList } from "@/Components/TaskList"
-import { PlusCircle } from "lucide-react"
-import TaskProgressCircle from "@/Components/TaskCircle"
-import Goals from "@/Components/GoalsList";
-import WeeklyProgress from "@/Components/WeeklyProgress";
-const GradientCard = () => (
+export const GradientCard = () => (
   <svg 
-    className="absolute top-0 left-0 w-full" 
+    className="absolute w-full" 
     style={{ 
-      height: '150%',
-      minHeight: '400px'
+      height: '150%',  // Make SVG taller than container
+      minHeight: '400px' // Ensure minimum height for smaller cards
     }} 
     preserveAspectRatio="xMidYMin slice" 
     viewBox="0 0 283 290" 
@@ -51,42 +44,3 @@ const GradientCard = () => (
     </defs>
   </svg>
 );
-
-export function NewHome() {
-  return (
-    <div className="flex h-screen bg-gray-900">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <AppBar />
-        <main className="flex-1 p-6 overflow-auto">
-          <div className="grid grid-cols-8 gap-6">
-            {/* First row */}
-            <div className="col-span-2 space-y-4 h-full">
-              <button className="relative w-full h-full min-h-[200px] overflow-hidden rounded-lg group">
-                <GradientCard />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 transition-transform duration-200 group-hover:scale-105">
-                  <PlusCircle className="w-8 h-8 mb-2" />
-                  <span className="text-3xl font-dm-sans">Add Task</span>
-                </div>
-              </button>
-            </div>
-            <div className="col-span-4">
-              <WeeklyProgress/>
-            </div>
-            <div className="col-span-2 flex justify-center items-center">
-              <TaskProgressCircle progress={62.5} total={8} completed={5} />
-            </div>
-            {/* Second row */}
-            <div className="col-span-3">
-              <Goals />
-            </div>
-            <div className="col-span-3 h-64">
-              <TaskList />
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  );
-}
-

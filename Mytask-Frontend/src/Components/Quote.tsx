@@ -1,12 +1,25 @@
-export function Quote(){
-    return <div className="bg-indigo-950 h-screen font-dm-sans flex justify-center flex-col">
-       <div className="flex justify-center ">
-        <div>
-        <div className="max-w-2xl bg-indigo-700 h-auto rounded-xl text-3xl text-white font-bold p-3">"My Tasks is a productivity app that helps you manage todos, subtasks, and daily goals. It lets you track progress and stay organized, making it easier to achieve your tasks efficiently"</div>
-        <div className="text-xl p-3 max-w-lg font-semibold">
+export function Quote() {
+  return (
+    <div className="relative h-screen w-full overflow-hidden font-dm-sans">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src="https://thumbs.dreamstime.com/b/colorful-cyberpunk-marble-abstract-background-liquid-wave-texture-creating-artworks-prints-hypnosis-cyberpunk-liquid-138842330.jpg"
+          className="h-full w-full object-cover"
+          alt="Background"
+        />
+        {/* Overlay with blur */}
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-md" />
+      </div>
+
+      {/* Content */}
+      <div className="relative h-full w-full flex items-center justify-center px-4">
+        <div className="max-w-2xl bg-gradient-to-br from-indigo-700/80 to-indigo-900/80 backdrop-blur-lg rounded-xl p-8 shadow-xl">
+          <p className="text-2xl md:text-3xl text-white font-bold leading-relaxed">
+            "My Tasks is a productivity app that helps you manage todos, subtasks, and daily goals. It lets you track progress and stay organized, making it easier to achieve your tasks efficiently."
+          </p>
         </div>
-        </div>
-        
-        </div>
+      </div>
     </div>
+  );
 }

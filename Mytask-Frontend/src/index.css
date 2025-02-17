@@ -30,6 +30,12 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem
   }
+  @font-face {
+    font-family: 'kubo';
+    src: url('./assets/kubo.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
   body {
     font-family: 'DM Sans', sans-serif;
   }

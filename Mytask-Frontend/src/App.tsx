@@ -1,6 +1,5 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Subtodo } from './Pages/Subtodo'
 import { RecoilRoot } from 'recoil'
 import { Completed } from './Pages/Completed'
 import { Home } from './Pages/Goals'
@@ -20,7 +19,6 @@ function App() {
       <Route path='/goals' element={<Home/>}/>
       <Route path='/signin' element={<Signin/>}/>
       <Route path='/signup' element={<Signup/>}/>
-      <Route path='/subtodo/:id' element={<Subtodo/>}/>
       <Route path='/completed' element={<Completed/>}/>
       <Route path='/calendar' element={<CalendarView/>}/>
       <Route path='/' element={<NewHome/>}/>

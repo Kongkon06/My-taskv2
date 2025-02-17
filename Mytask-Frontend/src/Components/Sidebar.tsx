@@ -76,8 +76,8 @@ export const Sidebar: React.FC = () => {
   return (
     <div className="relative w-64 overflow-hidden">
       <GradientBackground />
-      <div className="relative z-10 p-4 space-y-4 bg-black/30 backdrop-blur-xl h-full">
-        <div className="font-bold text-2xl mb-6 text-white">My Tasks</div>
+      <div className="relative z-10 p-4 space-y-4 bg-black/30 backdrop-blur-xl border-r border-purple-800 h-full">
+        <div className="font-bold text-2xl mb-6 text-white font-kubo">My Tasks</div>
         <nav className="space-y-2">
           <SidebarItem
             icon={Home}

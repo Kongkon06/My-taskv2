@@ -11,7 +11,8 @@ export default {
   			'dm-sans': [
   				'DM Sans"',
   				'sans-serif'
-  			]
+  			],
+			  kubo: ['kubo', 'sans-serif'],
   		},
   		screens: {
   			mobile: '640px'

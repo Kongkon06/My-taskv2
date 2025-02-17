@@ -9,6 +9,52 @@ interface SignupInput{
         username:string,
         password:string,
 }
+const GradientCard = () => (
+  <svg 
+    className="absolute top-0 left-0 w-full" 
+    style={{ 
+      height: '150%',
+      minHeight: '400px',
+    }} 
+    preserveAspectRatio="xMidYMin slice" 
+    viewBox="0 0 283 290" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0 20C0 8.9543 8.9543 0 20 0H151H216H249.5H263C274.046 0 283 8.95431 283 20V270C283 281.046 274.046 290 263 290H20C8.95431 290 0 281.046 0 270V20Z"
+      fill="url(#paint0_linear_98_2)"
+    />
+    <g clipPath="url(#paint1_angular_98_2_clip_path)">
+      <g transform="matrix(-0.1225 0.178 -0.178 -0.1225 122.5 112)">
+        <foreignObject x="-1085.33" y="-1085.33" width="2170.67" height="2170.67">
+          <div
+            style={{
+              background:
+                "conic-gradient(from 90deg, rgba(166, 20, 44, 0.3158) 0deg, rgba(190, 22, 22, 0.2) 12.8811deg, rgba(19, 0, 127, 1) 61.2748deg, rgba(0, 0, 0, 1) 186.719deg, rgba(28, 2, 173, 1) 283.916deg, rgba(166, 20, 44, 0.3158) 360deg)",
+              height: "100%",
+              width: "100%",
+              opacity: 1,
+            }}
+          />
+        </foreignObject>
+      </g>
+    </g>
+    <path
+      d="M0 20C0 8.9543 8.9543 0 20 0H110.52C127.089 0 136.472 18.9917 126.405 32.1515L113.28 49.3104C100.44 66.0956 119.02 88.7324 137.986 79.4115L266 16.5C273.235 11.6055 283 16.789 283 25.5244V270C283 281.046 274.046 290 263 290H20C8.95431 290 0 281.046 0 270V20Z"
+    />
+    <defs>
+      <clipPath id="paint1_angular_98_2_clip_path">
+        <path d="M0 20C0 8.9543 8.9543 0 20 0H110.52C127.089 0 136.472 18.9917 126.405 32.1515L113.28 49.3104C100.44 66.0956 119.02 88.7324 137.986 79.4115L266 16.5V16.5C273.235 11.6055 283 16.789 283 25.5244V270C283 281.046 274.046 290 263 290H20C8.95431 290 0 281.046 0 270V20Z" />
+      </clipPath>
+      <linearGradient id="paint0_linear_98_2" x1="150" y1="118.5" x2="422" y2="-179" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#000FB9" />
+        <stop offset="0.295" stopColor="#D1466D" />
+        <stop offset="0.640786" stopColor="#FF0048" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
 export function Auth({type}:{type : "signup"| "signin"}){
     const navigate = useNavigate();
     const setid = useSetRecoilState(parentid);
@@ -26,11 +72,14 @@ export function Auth({type}:{type : "signup"| "signin"}){
         console.log(e);
       }
     }
-    return <div className=" h-screen font-dm-sans flex justify-center">
-        <div className=" flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/5">
-        <div className="flex justify-center font-extrabold mb-3 sm:text-xl lg:text-3xl">Create an account</div>
+    return <div className="relative h-screen font-dm-sans text-white bg-slate-900 flex justify-center">
+        <div className="absolute inset-0 overflow-hidden">
+        <GradientCard/>
+        </div>       
+        <div className="relative flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/5">
+        <div className="flex justify-center font-extrabold mb-3 sm:text-xl font-kubo lg:text-3xl">Create an account</div>
         <div className="flex justify-center mb-3">
-            <div>{type==="signup"?"Already hava an account?":"Don't have an account"}</div>
+            <div>{type==="signup"?"Already hava an account?":"Don't have an account?"}</div>
             <div role="button" onClick={()=>{navigate(type==="signup"?"/Signin":"/Signup")}} className="underline hover:underline-offset-auto">{type==="signup"?"Login":"Sign up"}</div>
         </div>
         <div>

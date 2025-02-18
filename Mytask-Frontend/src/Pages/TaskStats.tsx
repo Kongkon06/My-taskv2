@@ -13,7 +13,7 @@ import ReactFlow, {
   Handle,
   Position
 } from 'reactflow';
-import { Info, NotebookIcon, Plus } from 'lucide-react';
+import { Info, Plus } from 'lucide-react';
 import "reactflow/dist/style.css";
 import axios from 'axios';
 import { DATABASE_URL } from '@/config';

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
+import { GradientCard } from './FancyCard';
 
 const WeeklyProgress = () => {
   const days = ["Mon", "Tues", "Wed", "Thurs", "Fri","Sat","Sun"];
@@ -11,26 +12,29 @@ const WeeklyProgress = () => {
   };
 
   const getStatusColor = (status:any) => {
-    return status === 'completed' ? 'bg-black' : 'bg-gray-300';
+    return status === 'completed' ? 'bg-indigo-700' : 'bg-gray-300';
   };
 
   return (
-    <Card className="w-full mx-auto">
+    <Card className="w-full relative overflow-hidden bg-slate-900 border-none mx-auto">
+      <div className='absolute inset-0'>
+        <GradientCard/>
+      </div>
       <CardHeader className="pb-2">
-        <CardTitle className="text-center mb-4">Weekly Progress</CardTitle>
+        <CardTitle className="text-center font-kubo relative mb-4 text-white">Weekly Progress</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className='relative'>
         <div className="grid grid-cols-8 gap-y-4 items-center">
-          <div className="h-6 w-12"></div>
+          <div className="h-6 w-12 "></div>
           {days.map((day, index) => (
-            <div key={index} className="text-center font-medium text-sm">
+            <div key={index} className="text-center text-white font-medium text-sm">
               {day}
             </div>
           ))}
           
           {goals.map((goal, goalIndex) => (
             <React.Fragment key={goalIndex}>
-              <div className="font-medium text-sm text-gray-600">{goal}</div>
+              <div className="font-medium text-sm text-slate-300">{goal}</div>
               {days.map((_, dayIndex) => {
                 const status = getRandomStatus();
                 return (
@@ -53,12 +57,12 @@ const WeeklyProgress = () => {
 
         <div className="mt-6 flex justify-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-black"></div>
-            <span className="text-sm">Completed</span>
+            <div className="w-4 h-4 bg-indigo-800"></div>
+            <span className="text-sm text-white">Completed</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-white border border-gray-300"></div>
-            <span className="text-sm">Not Started</span>
+            <span className="text-sm text-white">Not Started</span>
           </div>
         </div>
       </CardContent>

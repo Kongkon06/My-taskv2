@@ -17,11 +17,14 @@ export default function (){
         })
     },[]);
     return (
-        <Card className="min-h-64 text-white border bg-slate-900 border-purple-800">
+        <Card className="min-h-64 relative overflow-hidden text-white border bg-slate-900 border-none">
+          <div className="absolute inset-0">
+          <GradientCard/>
+          </div>
           <CardHeader>
-            <CardTitle>Goals</CardTitle>
+            <CardTitle className="relative font-kubo">Goals</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
             <div className="grid grid-cols-2 gap-4">
             {goals.map((task) => (
         <Todo
@@ -38,7 +41,7 @@ export default function (){
       )
 }
 function Todo({ id, name, fn,del}:{id:number, name:string, fn:()=>void, status:boolean,del:()=>void}){
-    return <div className={`relative font-dm-sans rounded-md font-semibold text-white p-2 w-full h-auto`}>
+    return <div className={`relative border border-black font-dm-sans rounded-md font-semibold text-white p-2 w-full h-auto`}>
       <div className="absolute inset-0 overflow-hidden">
         <GradientCard/>
       </div>

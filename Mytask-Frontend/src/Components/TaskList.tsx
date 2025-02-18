@@ -1,6 +1,7 @@
 import type React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Checkbox } from "./ui/checkbox"
+import { GradientCard } from "./FancyCard"
 
 const tasks = [
   { id: 1, title: "Complete project proposal", completed: false },
@@ -12,18 +13,21 @@ const tasks = [
 
 export const TaskList: React.FC = () => {
   return (
-    <Card>
+    <Card className="relative border-none overflow-hidden bg-slate-900">
+      <div className="absolute inset-0">
+        <GradientCard/>
+      </div>
       <CardHeader>
-        <CardTitle>Daily Tasks</CardTitle>
+        <CardTitle className="text-white relative font-kubo">Daily Tasks</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <ul className="space-y-4">
           {tasks.map((task) => (
             <li key={task.id} className="flex items-center space-x-2">
-              <Checkbox id={`task-${task.id}`} checked={task.completed} />
+              <Checkbox className="bg-white" id={`task-${task.id}`} checked={task.completed} />
               <label
                 htmlFor={`task-${task.id}`}
-                className={`flex-1 ${task.completed ? "line-through text-muted-foreground" : ""}`}
+                className={`flex-1 ${task.completed ? "line-through text-muted-foreground" : "text-white"}`}
               >
                 {task.title}
               </label>

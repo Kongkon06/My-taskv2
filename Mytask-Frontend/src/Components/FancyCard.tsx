@@ -1,6 +1,6 @@
 export const GradientCard = () => (
   <svg 
-    className="absolute w-full" 
+    className="absolute blur-lg -top-30 w-full" 
     style={{ 
       height: '150%',  // Make SVG taller than container
       minHeight: '400px' // Ensure minimum height for smaller cards

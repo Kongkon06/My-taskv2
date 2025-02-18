@@ -2,6 +2,7 @@ import type React from "react"
 import { Calendar } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { GradientCard } from "./FancyCard"
 
 const GitHubContributions: React.FC = () => {
   // Helper to generate sample data for current month
@@ -36,21 +37,21 @@ const GitHubContributions: React.FC = () => {
     return 4
   }
 
-  // Get color based on contribution level
+  // Get color based on contribution level - now using indigo shades
   const getColor = (level: number) => {
     switch (level) {
       case 0:
-        return "bg-primary/10"
+        return "bg-indigo-100"
       case 1:
-        return "bg-primary/30"
+        return "bg-indigo-300"
       case 2:
-        return "bg-primary/50"
+        return "bg-indigo-500"
       case 3:
-        return "bg-primary/70"
+        return "bg-indigo-700"
       case 4:
-        return "bg-primary"
+        return "bg-indigo-900"
       default:
-        return "bg-primary/10"
+        return "bg-indigo-100"
     }
   }
 
@@ -59,14 +60,17 @@ const GitHubContributions: React.FC = () => {
   const activeCount = contributions.filter((day) => day.count > 0).length
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <Card className="relative overflow-hidden border-none bg-slate-900">
+      <div className="absolute inset-0">
+        <GradientCard/>
+      </div>
+      <CardHeader className="relative text-white">
+        <CardTitle className="flex items-center font-kubo gap-2">
           <Calendar className="w-5 h-5" />
           {new Date().toLocaleString("default", { month: "long", year: "numeric" })}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative text-white">
         <p className="text-sm text-muted-foreground mb-4">
           {totalContributions} contributions in {activeCount} active days
         </p>
@@ -75,7 +79,7 @@ const GitHubContributions: React.FC = () => {
           <div className="grid grid-cols-7 gap-[3px]">
             {/* Weekday headers */}
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div key={day} className="text-xs text-muted-foreground h-4 text-center mb-1">
+              <div key={day} className="text-xs text-white h-4 text-center mb-1">
                 {day}
               </div>
             ))}
@@ -96,7 +100,7 @@ const GitHubContributions: React.FC = () => {
                     <TooltipTrigger>
                       <div
                         className={`w-[10px] h-[10px] rounded-sm ${getColor(level)} 
-                          hover:ring-1 hover:ring-primary/50 transition-all cursor-pointer`}
+                          hover:ring-1 hover:ring-indigo-500 transition-all cursor-pointer`}
                       />
                     </TooltipTrigger>
                     <TooltipContent>
@@ -124,4 +128,3 @@ const GitHubContributions: React.FC = () => {
 }
 
 export default GitHubContributions
-

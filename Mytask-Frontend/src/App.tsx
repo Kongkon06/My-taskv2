@@ -7,8 +7,8 @@ import { Signin } from './Pages/Signin'
 import { Signup } from './Pages/Signup'
 import { NewHome } from './Pages/Home'
 import { CalendarView } from './Components/CalenderView'
-import TaskPlanner from './Pages/TaskStats'
 import { GoalView } from './Pages/Editpanel'
+import { Info } from './Pages/Info'
 function App() {
 
 
@@ -23,6 +23,7 @@ function App() {
       <Route path='/calendar' element={<CalendarView/>}/>
       <Route path='/' element={<NewHome/>}/>
       <Route path='/area' element={<GoalView/>}/>
+      <Route path='/landing' element={<Info/>}/>
     </Routes>
     </BrowserRouter>
     </RecoilRoot>

@@ -1,13 +1,17 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader} from './ui/card';
+import { GradientCard } from './FancyCard';
 
 const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
   // Convert progress to normalized value
   const normalizedProgress = Math.min(Math.max(progress, 0), 100);
   
   return (
-    <Card className='w-full max-w-sm mx-auto bg-slate-900'>
-        <CardContent className='flex flex-col items-center'>
+    <Card className='w-full relative overflow-hidden border-none max-w-sm mx-auto bg-slate-900'>\
+    <div className='absolute inset-0'>
+      <GradientCard/>
+    </div>
+        <CardContent className='flex relative flex-col items-center'>
         <CardHeader className=' text-white p-4'>Total Task completed today</CardHeader>
     <div className="w-56 h-56 relative">
       {/* Container */}

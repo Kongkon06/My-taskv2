@@ -11,7 +11,7 @@ interface SignupInput{
 }
 const GradientCard = () => (
   <svg 
-    className="absolute top-0 left-0 w-full" 
+    className="absolute -top-40 left-0 w-full" 
     style={{ 
       height: '150%',
       minHeight: '400px',
@@ -76,7 +76,7 @@ export function Auth({type}:{type : "signup"| "signin"}){
         <div className="absolute inset-0 overflow-hidden">
         <GradientCard/>
         </div>       
-        <div className="relative flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/5">
+        <div className="relative flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/6">
         <div className="flex justify-center font-extrabold mb-3 sm:text-xl font-kubo lg:text-3xl">Create an account</div>
         <div className="flex justify-center mb-3">
             <div>{type==="signup"?"Already hava an account?":"Don't have an account?"}</div>

@@ -4,21 +4,26 @@ import { Award, Calendar, CheckCircle } from "lucide-react";
 import { Progress } from "@radix-ui/react-progress";
 import GitHubContributions from "@/Components/GitContri";
 import WeeklyProgress from "@/Components/WeeklyProgress";
+import { GradientCard } from "@/Components/FancyCard";
+import { Appbar } from "@/Components/Appbar";
 
 const TaskCompletionRate: React.FC = () => {
   const totalTasks = 100
   const completedTasks = 75
 
   return (
-    <Card>
+    <Card className="relative overflow-hidden bg-slate-900 border-none">
+      <div className="absolute inset-0">
+        <GradientCard/>
+      </div>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CheckCircle className="w-5 h-5" />
+        <CardTitle className="flex relative text-white font-kubo items-center gap-2">
+          <CheckCircle className="w-5 h-5 text-white " />
           Overall Task Completion
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="text-3xl font-bold mb-2">
+      <CardContent className="relative">
+        <div className="text-3xl font-bold text-white mb-2">
           {completedTasks}/{totalTasks}
         </div>
         <Progress value={(completedTasks / totalTasks) * 100} className="h-2" />
@@ -35,15 +40,18 @@ const TaskStreak: React.FC = () => {
   const longestStreak = 14
 
   return (
-    <Card>
+    <Card className="relative overflow-hidden border-none bg-slate-900">
+      <div className="absolute inset-0">
+        <GradientCard/>
+      </div>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex relative text-white font-kubo items-center gap-2">
           <Award className="w-5 h-5" />
           Task Streak
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="flex justify-between">
+      <CardContent className="relative">
+        <div className="flex justify-between text-white">
           <div>
             <div className="text-3xl font-bold">{currentStreak}</div>
             <p className="text-sm text-muted-foreground">Current Streak</p>
@@ -63,14 +71,17 @@ const MonthlyProgress: React.FC = () => {
   const totalThisMonth = 120
 
   return (
-    <Card>
+    <Card  className="relative overflow-hidden border-none bg-slate-900">
+       <div className="absolute inset-0">
+        <GradientCard/>
+      </div>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex relative text-white font-kubo items-center gap-2">
           <Calendar className="w-5 h-5" />
           Monthly Progress
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative text-white">
         <div className="text-3xl font-bold mb-2">
           {completedThisMonth}/{totalThisMonth}
         </div>
@@ -88,7 +99,8 @@ export function Completed(){
     <div className="flex h-screen bg-black">
       <Sidebar />
       <div className="flex flex-col flex-1 text-white">
-        <main className="flex-1 p-6 overflow-auto">
+        <Appbar/>
+        <main className="flex-1 px-4 mt-8 overflow-auto">
           <h1 className="text-3xl font-kubo mb-6">Task Report & Analytics</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <TaskCompletionRate />

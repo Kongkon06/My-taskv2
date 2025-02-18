@@ -6,9 +6,9 @@ import { Home } from './Pages/Goals'
 import { Signin } from './Pages/Signin'
 import { Signup } from './Pages/Signup'
 import { NewHome } from './Pages/Home'
-import GitHubContributions from './Components/GitContri'
 import { CalendarView } from './Components/CalenderView'
 import TaskPlanner from './Pages/TaskStats'
+import { GoalView } from './Pages/Editpanel'
 function App() {
 
 
@@ -22,8 +22,7 @@ function App() {
       <Route path='/completed' element={<Completed/>}/>
       <Route path='/calendar' element={<CalendarView/>}/>
       <Route path='/' element={<NewHome/>}/>
-      <Route path='/contri' element={<GitHubContributions/>}/>
-      <Route path='/area' element={<TaskPlanner/>}/>
+      <Route path='/area' element={<GoalView/>}/>
     </Routes>
     </BrowserRouter>
     </RecoilRoot>

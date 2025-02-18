@@ -3,7 +3,7 @@ import 'react-calendar/dist/Calendar.css';
 import { isSameDay, parseISO, isBefore, isAfter } from 'date-fns';
 import { useRecoilValue } from 'recoil';
 import { Daily, dailyatom } from '../Atoms/Atoms';
-import { AppBar } from '@/Components/Appbar';
+import { Appbar } from '@/Components/Appbar';
 
 function TrackProgressCalendar() {
   const daily = useRecoilValue(dailyatom); 
@@ -44,7 +44,7 @@ function TrackProgressCalendar() {
 
   return (
     <div >
-      <AppBar/>
+      <Appbar/>
       <div className="flex flex-col font-dm-sans items-center justify-center h-auto bg-gray-100">
       <h1 className="text-2xl font-bold mb-4">Daily Task Progress</h1>
       <Calendar

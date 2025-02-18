@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { DATABASE_URL } from "@/config";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { task_com, todoatom } from "@/Atoms/Atoms";
+import { todoatom } from "@/Atoms/Atoms";
 import Hook from "./Hook";
+import { GradientCard } from "@/Components/FancyCard";
 
 export default function (){
     const [goals,setGoals]= useRecoilState(todoatom);
@@ -16,7 +17,7 @@ export default function (){
         })
     },[]);
     return (
-        <Card className="min-h-64">
+        <Card className="min-h-64 text-white border bg-slate-900 border-purple-800">
           <CardHeader>
             <CardTitle>Goals</CardTitle>
           </CardHeader>
@@ -36,15 +37,13 @@ export default function (){
         </Card>
       )
 }
-function Todo({ id, name, fn, status,del}:{id:number, name:string, fn:()=>void, status:boolean,del:()=>void}){
-    const [is_com, set_com] = useRecoilState(task_com(id));  
-    const [color, setColor] = useState("bg-slate-950");
-    useEffect(() => {
-      set_com(status);
-      setColor(is_com ? "bg-green-500" : "bg-slate-900");
-    }, [status, set_com,is_com]);
-    return <div className={`${color} font-dm-sans rounded-md font-semibold text-white p-2 w-full h-auto`}>
-      <div className="sm:col-span-1 hidden sm:block">
+function Todo({ id, name, fn,del}:{id:number, name:string, fn:()=>void, status:boolean,del:()=>void}){
+    return <div className={`relative font-dm-sans rounded-md font-semibold text-white p-2 w-full h-auto`}>
+      <div className="absolute inset-0 overflow-hidden">
+        <GradientCard/>
+      </div>
+      <div className="relativeblur-xl"></div>
+      <div className="relative sm:col-span-1 hidden sm:block">
       <div className="flex justify-center items-center">
         <Hook del={del} fn={fn} name={name} id={id}/>
       </div>

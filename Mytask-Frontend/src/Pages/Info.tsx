@@ -1,5 +1,3 @@
-import React from 'react';
-
 const GradientCard = () =>  (
     <svg 
       className="absolute blur-lg -top-30 w-full" 

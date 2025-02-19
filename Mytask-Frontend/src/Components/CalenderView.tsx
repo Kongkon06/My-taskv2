@@ -1,18 +1,17 @@
-import type React from "react"
+import React from "react"
 import { useState } from "react"
 import { Calendar, dateFnsLocalizer } from "react-big-calendar"
-import {format} from "date-fns/format"
-import {parse} from "date-fns/parse"
-import {startOfWeek} from "date-fns/startOfWeek"
-import {getDay} from "date-fns/getDay"
-import {enUS} from "date-fns/locale/en-US"
+import { format } from "date-fns/format"
+import { parse } from "date-fns/parse"
+import { startOfWeek } from "date-fns/startOfWeek"
+import { getDay } from "date-fns/getDay"
+import { enUS } from "date-fns/locale/en-US"
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Badge } from "./ui/badge"
 import { CheckCircle2, Circle } from "lucide-react"
 import { Sidebar } from "./Sidebar"
 
-// Setup localizer for react-big-calendar
 const locales = {
   "en-US": enUS,
 }
@@ -25,30 +24,29 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
-// Sample task data (replace this with your actual data source)
+// Sample task data
 const tasks = [
   {
     id: 1,
     title: "Complete project proposal",
-    start: new Date(2023, 5, 1),
-    end: new Date(2023, 5, 1),
+    start: new Date(2025, 5, 1),
+    end: new Date(2025, 5, 1),
     completed: false,
   },
   {
     id: 2,
     title: "Team meeting",
-    start: new Date(2023, 5, 3),
-    end: new Date(2023, 5, 3),
+    start: new Date(2025, 5, 3),
+    end: new Date(2025, 5, 3),
     completed: true,
   },
   {
     id: 3,
     title: "Review code",
-    start: new Date(2023, 5, 5),
-    end: new Date(2023, 5, 5),
+    start: new Date(2025, 5, 5),
+    end: new Date(2025, 5, 5),
     completed: false,
   },
-  // Add more tasks as needed
 ]
 
 export const CalendarView: React.FC = () => {
@@ -93,28 +91,75 @@ export const CalendarView: React.FC = () => {
   }
 
   return (
-    <div className="flex">
-      <Sidebar></Sidebar>
-      <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Task Calendar</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="h-[600px]">
-          <Calendar
-            localizer={localizer}
-            events={tasks}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: "100%" }}
-            eventPropGetter={eventStyleGetter}
-            onSelectEvent={handleSelectEvent}
-          />
-        </div>
-        {selectedDate && <TaskList date={selectedDate} />}
-      </CardContent>
-    </Card>
+    <div className="flex h-screen dark">
+      <Sidebar />
+      <Card className="w-full bg-background text-foreground">
+        <CardHeader>
+          <CardTitle>Task Calendar</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[600px] calendar-dark">
+            <Calendar
+              localizer={localizer}
+              events={tasks}
+              startAccessor="start"
+              endAccessor="end"
+              style={{ height: "100%" }}
+              eventPropGetter={eventStyleGetter}
+              onSelectEvent={handleSelectEvent}
+              className="dark-calendar"
+            />
+          </div>
+          {selectedDate && <TaskList date={selectedDate} />}
+        </CardContent>
+      </Card>
+      <style>{`
+        .calendar-dark .rbc-calendar {
+          background-color: hsl(var(--background));
+          color: hsl(var(--foreground));
+        }
+
+        .calendar-dark .rbc-header {
+          background-color: hsl(var(--muted));
+          color: hsl(var(--muted-foreground));
+          border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .calendar-dark .rbc-month-view {
+          border: 1px solid hsl(var(--border));
+        }
+
+        .calendar-dark .rbc-day-bg {
+          background-color: hsl(var(--background));
+        }
+
+        .calendar-dark .rbc-off-range-bg {
+          background-color: hsl(var(--muted));
+        }
+
+        .calendar-dark .rbc-today {
+          background-color: hsl(var(--accent));
+        }
+
+        .calendar-dark .rbc-button-link {
+          color: hsl(var(--foreground));
+        }
+
+        .calendar-dark .rbc-show-more {
+          color: hsl(var(--primary));
+          background-color: transparent;
+        }
+
+        .calendar-dark .rbc-row-segment {
+          padding: 2px 4px;
+        }
+
+        .calendar-dark .rbc-event {
+          border-radius: 4px;
+        }
+      `}</style>
     </div>
   )
 }
 
+export default CalendarView

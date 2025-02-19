@@ -17,7 +17,7 @@ import { Info, Plus } from 'lucide-react';
 import "reactflow/dist/style.css";
 import axios from 'axios';
 import { DATABASE_URL } from '@/config';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { childatom, parentid, todoatom } from '@/Atoms/Atoms';
 
 const GradientCardNode = ({ data }: NodeProps) => {
@@ -106,28 +106,21 @@ const shaderTypes = [
   "Material Output"
 ];
 
-const userNodes = [{
-  id: "1",
-  type: 'gradientCard',
-  data: { label: "Uni" },
-  position: { x: 450, y: 0 },
-  className:'absolute overflow-hidden'
-}];
 
 const ShaderNodeFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(userNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);  
   const [selectedNode, setSelectedNode] = useState(shaderTypes[0]);
+  const parentTask = useRecoilValue(todoatom);
   const userid = useRecoilValue(parentid);
-  const [todo, settodo] = useRecoilState(todoatom);
-  const [child, setchild] = useRecoilState(childatom);
+  const setchild = useSetRecoilState(childatom);
 
   async function fetchNodes() {
     try {
       const response = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, {
-        parentId: 28,
+        parentId: userid,
       });
-  
+      console.log(userid);
       const newChildren = response.data.Todos;
       setchild(newChildren);
   
@@ -159,14 +152,20 @@ const ShaderNodeFlow = () => {
   }
   
   useEffect(() => {
-    axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`, {
-      userId: userid
-    }).then(response => {
-      settodo(response.data.Todos);
+    console.log(parentTask);
+    parentTask.map((task)=>{
+      if(task.id == userid){
+        setNodes((prevNodes) => [
+          ...prevNodes,{
+            id: '1',
+            type: 'gradientCard',
+            data: { label: task.name },
+            position:  { x: 450, y: 0 },
+            className:'absolute overflow-hidden'
+          },
+        ]);
+      }
     })
-  }, [todoatom, userid]);
-
-  useEffect(() => {
     fetchNodes();
   }, [])
 

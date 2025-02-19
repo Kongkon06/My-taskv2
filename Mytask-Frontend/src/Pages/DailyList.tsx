@@ -4,7 +4,6 @@ import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { dailyatom, parentid } from "../Atoms/Atoms";
 import { isOpen } from "../Atoms/Atoms";
-import { Editpanel } from "./Editpanel";
 import { DATABASE_URL } from "../config";
 export function Dailypage(){
     const userid = useRecoilValue(parentid)
@@ -49,12 +48,6 @@ function Addbutton() {
                     <path d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
             </div>
-
-            {Open && (
-                <div className="fixed inset-0 z-20 flex justify-center items-center">
-                    <Editpanel />
-                </div>
-            )}
         </div>
     );
 }

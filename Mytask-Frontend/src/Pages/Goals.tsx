@@ -3,7 +3,7 @@ import Sidebar from '@/Components/Sidebar';
 import { DATABASE_URL } from '@/config';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Todo } from '@/Components/Todo';
 import { useNavigate } from 'react-router-dom';
 import { Appbar } from '@/Components/Appbar';
@@ -11,6 +11,7 @@ import { Appbar } from '@/Components/Appbar';
 export const Home = () => {
   const userid = useRecoilValue(parentid);
   const [todo,settodo] = useRecoilState(todoatom);
+  const setParentid = useSetRecoilState(parentid);
   const navigte = useNavigate();
   useEffect(()=>{
     axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
@@ -24,6 +25,7 @@ export const Home = () => {
   const fetch = (id: number, status: boolean) => {
     todo.map((task:any)=>{
       if(task.subTodos.length!=0){
+        setParentid(id);
         navigte('/area');
       }
     })

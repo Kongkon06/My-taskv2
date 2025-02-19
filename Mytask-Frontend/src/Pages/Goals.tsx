@@ -8,7 +8,7 @@ import { Todo } from '@/Components/Todo';
 import { useNavigate } from 'react-router-dom';
 import { Appbar } from '@/Components/Appbar';
 
-export const Home = () => {
+export const GoalsList = () => {
   const userid = useRecoilValue(parentid);
   const [todo,settodo] = useRecoilState(todoatom);
   const setParentid = useSetRecoilState(parentid);
@@ -51,5 +51,3 @@ export const Home = () => {
     </div>
   );
 };
-
-export default Home;

@@ -52,7 +52,7 @@ const GradientCard = () => (
   </svg>
 );
 
-export function NewHome() {
+export function Home() {
   return (
     <div className="flex h-screen bg-gray-900">
       <Sidebar />

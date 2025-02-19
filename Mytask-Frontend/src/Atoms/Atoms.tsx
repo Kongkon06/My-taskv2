@@ -38,13 +38,14 @@ export const isOpen = atomFamily({
   key:"isOpen",
   default:false
 })
-export const editpan = atom({
-  key:"editpan",
-  default:false
-})
+
 export const currentid = atom({
   key:"currentid",
   default:0
+})
+export const userAtom = atom({
+  key:'userAtom',
+  default:''
 })
 export const parentid = atom({
   key:"parentid",
@@ -55,10 +56,6 @@ export const task_com = atomFamily({
     default:false
   })
   
-  export const mainload = atom({
-    key:'mainload',
-    default:true
-  })
   export const dailyatom = atom<Daily[]>({
     key:'daily',
     default:[]

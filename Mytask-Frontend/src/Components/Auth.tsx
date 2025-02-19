@@ -1,16 +1,24 @@
+import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { DATABASE_URL } from "../config";
-import { ChangeEvent, useState } from "react";
-import {  useSetRecoilState } from "recoil";
-import { parentid } from "../Atoms/Atoms";
-interface SignupInput{
-        email?:string,
-        username:string,
-        password:string,
-}
-const GradientCard = () => (
-  <svg 
+import { ChangeEvent, useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../Atoms/Atoms";
+
+// Firebase Config (Replace with your actual Firebase config)
+const firebaseConfig = {
+  apiKey: "AIzaSyCJeJsp9G5hnzzyNA-DC29f432u4MqFl00",
+  authDomain: "my-taskv2.firebaseapp.com",
+  projectId: "my-taskv2",
+  storageBucket: "my-taskv2.firebasestorage.app",
+  messagingSenderId: "494955149889",
+  appId: "1:494955149889:web:8a3710272e3ce3ab65e4c0",
+  measurementId: "G-S0G2QKN50D"
+};
+
+const GradientCard = ()=> (<svg 
     className="absolute -top-40 left-0 w-full" 
     style={{ 
       height: '150%',
@@ -55,59 +63,153 @@ const GradientCard = () => (
     </defs>
   </svg>
 );
-export function Auth({type}:{type : "signup"| "signin"}){
-    const navigate = useNavigate();
-    const setid = useSetRecoilState(parentid);
-    const [postInputs,setpostInputs] = useState<SignupInput>({
-        email:"",
-        password:"",
-        username:""
-    })
-    async function SendReq(){
-      try{
-         await axios.post(`${DATABASE_URL}/api/v2/User/${type==="signup"?"":"signin"}`,postInputs).then(res=>{setid(res.data.id);});
-        navigate("/");
-      }catch(e){
-        alert("Error while signing in")
-        console.log(e);
-      }
-    }
-    return <div className="relative h-screen font-dm-sans text-white bg-slate-900 flex justify-center">
-        <div className="absolute inset-0 overflow-hidden">
-        <GradientCard/>
-        </div>       
-        <div className="relative flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/6">
-        <div className="flex justify-center font-extrabold mb-3 sm:text-xl font-kubo lg:text-3xl">Create an account</div>
-        <div className="flex justify-center mb-3">
-            <div>{type==="signup"?"Already hava an account?":"Don't have an account?"}</div>
-            <div role="button" onClick={()=>{navigate(type==="signup"?"/Signin":"/Signup")}} className="underline hover:underline-offset-auto">{type==="signup"?"Login":"Sign up"}</div>
-        </div>
-        <div>
-       {type=="signup"?<LabelledInput labell="Email" placeholder="user12@email" onchange={(e)=>{setpostInputs(c=>({...c,email:e.target.value}))}}/> : null}
-        
-        <LabelledInput labell="Username" placeholder="Enter username" onchange={(e)=>{setpostInputs(c=>({...c,username:e.target.value}))}}/>
-        
-        <LabelledInput labell="Password" type="password" placeholder="" onchange={(e)=>{setpostInputs(c=>({...c,password:e.target.value}))}}/>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-        <button type="button" onClick={SendReq} className=" w-full mt-9 text-white font-bold bg-indigo-700 hover:bg-indigo-600 rounded-lg sm:text-md lg:text-2xl px-5 py-2.5 me-2 mb-2 dark:bg-indigo-700 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-700">{type === "signup"?"Sign up": "Sign in"}</button>
-        </div></div>
+interface SignupInput {
+  email?: string;
+  username: string;
+  password: string;
+}
+
+export function Auth({ type }: { type: "signup" | "signin" }) {
+  const navigate = useNavigate();
+  const setid = useSetRecoilState(userAtom);
+  const [postInputs, setpostInputs] = useState<SignupInput>({
+    email: "",
+    password: "",
+    username: "",
+  });
+  
+  // Track if Google sign-in has been triggered
+  const [triggerRequest, setTriggerRequest] = useState(false);
+  
+  async function SendReq() {
+    try {
+      const res = await axios.post(
+        `${DATABASE_URL}/api/v2/User${type === "signup" ? "" : "/signin"}`,
+        postInputs
+      );
+      setid(res.data.id);
+      navigate("/");
+    } catch (e) {
+      alert("Error while signing in");
+      console.log(e);
+    }
+  }
+  
+  async function handleGoogleSignIn() {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+  
+      console.log("Google User:", user);
+      console.log(user.email);
+  
+      setpostInputs({
+        email: user.email?.toString() ?? "",
+        password: user.uid.toString() ?? "",
+        username: user.displayName?.toString() ?? "",
+      });
+  
+      // Set trigger to send request
+      if (type === "signup") setTriggerRequest(true);
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+    }
+  }
+  
+  // Use useEffect to send the request **after** postInputs is updated
+  useEffect(() => {
+    if (triggerRequest) {
+      SendReq();
+      setTriggerRequest(false); // Reset trigger
+    }
+  }, [postInputs]); // Runs when postInputs changes
+  
+  
+
+
+  return (
+    <div className="relative h-screen font-dm-sans text-white bg-slate-900 flex justify-center">
+      <div className="absolute inset-0 overflow-hidden">
+        <GradientCard/>
+      </div>
+      <div className="relative flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/6">
+        <div className="flex justify-center font-extrabold mb-3 sm:text-xl font-kubo lg:text-3xl">
+          {type === "signup" ? "Create an account" : "Sign in"}
+        </div>
+        <div className="flex justify-center mb-3">
+          <div>{type === "signup" ? "Already have an account?" : "Don't have an account?"}</div>
+          <div
+            role="button"
+            onClick={() => navigate(type === "signup" ? "/Signin" : "/Signup")}
+            className="underline cursor-pointer"
+          >
+            {type === "signup" ? "Login" : "Sign up"}
+          </div>
+        </div>
+
+        {type === "signup" && (
+          <LabelledInput
+            labell="Email"
+            placeholder="user12@email"
+            onchange={(e) => setpostInputs((c) => ({ ...c, email: e.target.value }))}
+          />
+        )}
+        <LabelledInput
+          labell="Username"
+          placeholder="Enter username"
+          onchange={(e) => setpostInputs((c) => ({ ...c, username: e.target.value }))}
+        />
+        <LabelledInput
+          labell="Password"
+          type="password"
+          placeholder=""
+          onchange={(e) => setpostInputs((c) => ({ ...c, password: e.target.value }))}
+        />
+
+        <button
+          type="button"
+          onClick={SendReq}
+          className="w-full mt-4 text-white font-bold bg-indigo-700 hover:bg-indigo-600 rounded-lg px-5 py-2.5"
+        >
+          {type === "signup" ? "Sign up" : "Sign in"}
+        </button>
+
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-full flex items-center justify-center bg-white text-black px-5 py-2.5 rounded-lg shadow-md hover:bg-gray-100"
+          >
+            <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google" className="mr-2" />
+            {type === "signup" ? "Sign up with Google" : "Sign in with Google"}
+          </button>
+        </div>
+
+      </div>
     </div>
+  );
 }
-interface LabelledInputtype{
- labell:string,
- placeholder:string,
- onchange:(e:ChangeEvent<HTMLInputElement>)=>void,
- type?:string
+
+interface LabelledInputType {
+  labell: string;
+  placeholder: string;
+  onchange: (e: ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
 }
-function LabelledInput({labell,placeholder,onchange,type}:LabelledInputtype){
-    return <div className="w-full font-dm-sans mb-3">
-   <div className=" w-64 pr-3 flex justify-start sm:text-lg lg:text-2xl font-bold mb-3 ">{labell}</div>
-    <div className="">
+
+function LabelledInput({ labell, placeholder, onchange, type }: LabelledInputType) {
+  return (
+    <div className="w-full font-dm-sans mb-3">
+      <div className="w-64 pr-3 flex justify-start sm:text-lg lg:text-2xl font-bold mb-3">{labell}</div>
       <input
-        type={type||"text"}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-12 ps-10 p-2.5 dark:bg-slate-950 dark:border-gray-600 dark:placeholder-slate-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:bg-white focus:text-black"
-        placeholder={placeholder} onChange={onchange}
+        type={type || "text"}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-12 p-2.5 dark:bg-slate-950 dark:border-gray-600 dark:text-white focus:bg-white focus:text-black"
+        placeholder={placeholder}
+        onChange={onchange}
       />
     </div>
-  </div>
+  );
 }

@@ -2,16 +2,18 @@ import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { DATABASE_URL } from "@/config";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { todoatom } from "@/Atoms/Atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { todoatom, userAtom } from "@/Atoms/Atoms";
 import Hook from "./Hook";
 import { GradientCard } from "@/Components/FancyCard";
 
 export default function (){
     const [goals,setGoals]= useRecoilState(todoatom);
+    const userId = useRecoilValue(userAtom);
     useEffect(()=>{
+      console.log(userId);
         axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
-            userId:0
+            userId:userId
         }).then(response=>{
             setGoals(response.data.Todos);
         })

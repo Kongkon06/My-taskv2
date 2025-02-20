@@ -4,8 +4,8 @@ import { DATABASE_URL } from "@/config";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { todoatom, userAtom } from "@/Atoms/Atoms";
-import Hook from "./Hook";
 import { GradientCard } from "@/Components/FancyCard";
+import Hook from "./Hook";
 
 export default function (){
     const [goals,setGoals]= useRecoilState(todoatom);
@@ -35,14 +35,13 @@ export default function (){
           id={task.id}
           status={task.status}
           fn={() => {}}
-          del={() => {}}
         />))}
             </div>
           </CardContent>
         </Card>
       )
 }
-function Todo({ id, name, fn,del}:{id:number, name:string, fn:()=>void, status:boolean,del:()=>void}){
+function Todo({ id, name, fn}:{id:number, name:string, fn:()=>void, status:boolean}){
     return <div className={`relative border border-black font-dm-sans rounded-md font-semibold text-white p-2 w-full h-auto`}>
       <div className="absolute inset-0 overflow-hidden">
         <GradientCard/>
@@ -50,7 +49,7 @@ function Todo({ id, name, fn,del}:{id:number, name:string, fn:()=>void, status:b
       <div className="relativeblur-xl"></div>
       <div className="relative sm:col-span-1 hidden sm:block">
       <div className="flex justify-center items-center">
-        <Hook del={del} fn={fn} name={name} id={id}/>
+        <Hook fn={fn} name={name} id={id}/>
       </div>
     </div>
     </div>

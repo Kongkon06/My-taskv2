@@ -1,4 +1,4 @@
-import { Info } from "../Pages/Info";
+import { Info } from "../Pages/Landing";
 import { useRecoilState,useSetRecoilState } from "recoil";
 import { currentid, isOpen } from "../Atoms/Atoms";
 

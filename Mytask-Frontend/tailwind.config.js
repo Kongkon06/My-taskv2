@@ -9,10 +9,11 @@ export default {
   	extend: {
   		fontFamily: {
   			'dm-sans': [
-  				'DM Sans"',
+  				'DM Sans',
   				'sans-serif'
   			],
 			  kubo: ['kubo', 'sans-serif'],
+			  goldman:['Goldman','sans-serif']
   		},
   		screens: {
   			mobile: '640px'

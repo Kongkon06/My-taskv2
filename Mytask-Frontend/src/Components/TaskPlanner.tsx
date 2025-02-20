@@ -13,12 +13,14 @@ import ReactFlow, {
   Handle,
   Position
 } from 'reactflow';
-import { Info, Plus } from 'lucide-react';
+import { Info, Plus, X } from 'lucide-react';
 import "reactflow/dist/style.css";
 import axios from 'axios';
 import { DATABASE_URL } from '@/config';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { childatom, parentid, todoatom } from '@/Atoms/Atoms';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 const GradientCardNode = ({ data }: NodeProps) => {
   return (
@@ -97,20 +99,13 @@ const nodeTypes = {
   gradientCard: GradientCardNode
 };
 
-const shaderTypes = [
-  "Principled BSDF",
-  "Shader to RGB",
-  "Color Ramp",
-  "Noise Texture",
-  "Displacement",
-  "Material Output"
-];
 
 
-const ShaderNodeFlow = () => {
+const TaskPlanner = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);  
-  const [selectedNode, setSelectedNode] = useState(shaderTypes[0]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [taskName, setTaskName] = useState('');
+  const [isCreating, setIsCreating] = useState(false);  
   const parentTask = useRecoilValue(todoatom);
   const userid = useRecoilValue(parentid);
   const setchild = useSetRecoilState(childatom);
@@ -183,39 +178,50 @@ const ShaderNodeFlow = () => {
     const newNode: Node = {
       id: `${nodes.length + 1}-${Date.now()}`,
       type: 'gradientCard',
-      data: { label: selectedNode },
+      data: { label: taskName },
       position: {
         x: Math.random() * 500,
         y: Math.random() * 300,
       }
     };
     setNodes((nds) => [...nds, newNode]);
-  }, [nodes, selectedNode, setNodes]);
+  }, [nodes, setNodes]);
 
   return (
     <div className="h-screen w-full bg-slate-950 text-white p-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-kubo">Shader Node Flow</h2>
+        <h2 className="text-xl font-kubo">Task Map</h2>
         <div className="flex items-center gap-4">
-          <select 
-            value={selectedNode}
-            onChange={(e) => setSelectedNode(e.target.value)}
-            className="bg-gray-800 border border-gray-700 rounded px-3 py-1"
-          >
-            {shaderTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={addNode}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
-          >
-            <Plus size={16} />
-            Add Node
-          </button>
-        </div>
+        <div className="relative flex items-center">
+              <Input
+                value={taskName}
+                onChange={(e) => setTaskName(e.target.value)}
+                className="pr-10 bg-slate-900 border-slate-700 focus:border-blue-500 transition-colors"
+                placeholder="Enter Task Name..."
+              />
+              {taskName && (
+                <X
+                  size={16}
+                  className="absolute right-3 cursor-pointer text-gray-400 hover:text-white transition-colors"
+                  onClick={() => setTaskName('')}
+                />
+              )}
+            </div>
+            <Button
+              onClick={addNode}
+              disabled={isCreating || !taskName.trim()}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 transition-colors"
+            >
+              {isCreating ? (
+                <span>Creating...</span>
+              ) : (
+                <>
+                  <Plus size={16} />
+                  Add Task
+                </>
+              )}
+            </Button>
+            </div>
       </div>
       <div className="h-4/5 border border-gray-700 rounded">
         <ReactFlow
@@ -245,4 +251,4 @@ const ShaderNodeFlow = () => {
   );
 };
 
-export default ShaderNodeFlow;
+export default TaskPlanner;

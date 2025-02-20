@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRecoilState,useSetRecoilState } from "recoil";
 import { currentid, isOpen } from "../Atoms/Atoms";
-import { Info } from "../Pages/Info"; 
+import { Info } from "../Pages/Landing"; 
 
 export function Threedots({ parentId }: { parentId?: number }) {
     const [isMultiDropdownOpen, setIsMultiDropdownOpen] = useState(false);

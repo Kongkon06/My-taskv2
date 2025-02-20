@@ -7,10 +7,10 @@ import { startOfWeek } from "date-fns/startOfWeek"
 import { getDay } from "date-fns/getDay"
 import { enUS } from "date-fns/locale/en-US"
 import "react-big-calendar/lib/css/react-big-calendar.css"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { Badge } from "./ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "../Components/ui/card"
+import { Badge } from "../Components/ui/badge"
 import { CheckCircle2, Circle } from "lucide-react"
-import { Sidebar } from "./Sidebar"
+import { Sidebar } from "../Components/Sidebar"
 
 const locales = {
   "en-US": enUS,

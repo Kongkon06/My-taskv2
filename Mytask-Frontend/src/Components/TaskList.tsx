@@ -2,18 +2,27 @@ import type React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Checkbox } from "./ui/checkbox"
 import { GradientCard } from "./FancyCard"
+import { useEffect } from "react"
+import axios from "axios"
+import { DATABASE_URL } from "@/config"
+import { ScrollArea } from "./ui/scroll-area"
+import { useRecoilState } from "recoil"
+import { dailyatom } from "@/Atoms/Atoms"
 
-const tasks = [
-  { id: 1, title: "Complete project proposal", completed: false },
-  { id: 2, title: "Review team performance", completed: true },
-  { id: 3, title: "Prepare presentation slides", completed: false },
-  { id: 4, title: "Schedule client meeting", completed: false },
-  { id: 5, title: "Update website content", completed: true },
-]
 
 export const TaskList: React.FC = () => {
+  const [daily, setdaily] = useRecoilState(dailyatom);
+  useEffect(()=>{
+   async function fetchData(){
+    const res = await axios.post(`${DATABASE_URL}/api/v2/Daily`,{
+        userId:11
+    })
+    setdaily(res.data);
+   }
+   fetchData();
+  },[])
   return (
-    <Card className="relative border-none overflow-hidden bg-slate-900">
+    <Card className="relative min-h-full max-h-auto border-none overflow-hidden bg-slate-900">
       <div className="absolute inset-0">
         <GradientCard/>
       </div>
@@ -21,8 +30,9 @@ export const TaskList: React.FC = () => {
         <CardTitle className="text-white relative font-kubo">Daily Tasks</CardTitle>
       </CardHeader>
       <CardContent className="relative">
+        <ScrollArea>
         <ul className="space-y-4">
-          {tasks.map((task) => (
+          {daily.map((task:any) => (
             <li key={task.id} className="flex items-center space-x-2">
               <Checkbox className="bg-white" id={`task-${task.id}`} checked={task.completed} />
               <label
@@ -34,6 +44,7 @@ export const TaskList: React.FC = () => {
             </li>
           ))}
         </ul>
+        </ScrollArea>
       </CardContent>
     </Card>
   )

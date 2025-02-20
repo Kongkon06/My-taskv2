@@ -6,9 +6,9 @@ import { GoalsList } from './Pages/Goals'
 import { Signin } from './Pages/Signin'
 import { Signup } from './Pages/Signup'
 import { Home } from './Pages/Home'
-import { CalendarView } from './Components/CalenderView'
-import { GoalView } from './Pages/Editpanel'
-import { Info } from './Pages/Info'
+import { CalendarView } from './Pages/CalenderView'
+import { PlanView } from './Pages/PlanView'
+import { Info } from './Pages/Landing'
 function App() {
 
 
@@ -22,7 +22,7 @@ function App() {
       <Route path='/completed' element={<Completed/>}/>
       <Route path='/calendar' element={<CalendarView/>}/>
       <Route path='/' element={<Home/>}/>
-      <Route path='/area' element={<GoalView/>}/>
+      <Route path='/area' element={<PlanView/>}/>
       <Route path='/landing' element={<Info/>}/>
     </Routes>
     </BrowserRouter>

@@ -201,14 +201,14 @@ export const Appbar = () => {
           >
             <Button
               variant="ghost"
-              onClick={() => navigate("/brands")}
+              onClick={() => alert("Feature Comming Soon")}
               className="nav-button text-white hover:text-yellow-300 hover:bg-transparent transition-all duration-300 hover:-translate-y-0.5 text-base font-medium"
             >
               Teams
             </Button>
             <Button
               variant="ghost"
-              onClick={() => navigate("/categories")}
+              onClick={() => alert("Feature Comming Soon")}
               className="nav-button text-white hover:text-yellow-300 hover:bg-transparent transition-all duration-300 hover:-translate-y-0.5 text-base font-medium"
             >
               Workspaces

@@ -137,6 +137,7 @@ export function Auth({ type }: { type: "signup" | "signin" }) {
         <GradientCard/>
       </div>
       <div className="relative flex justify-center flex-col p-2 h-auto sm:w-auto lg:w-2/6">
+      <div className="text-red-600 sm:text-lg font-kubo lg:text-2xl">*The App is still in Developement Phase and Soon be notified*</div>
         <div className="flex justify-center font-extrabold mb-3 sm:text-xl font-kubo lg:text-3xl">
           {type === "signup" ? "Create an account" : "Sign in"}
         </div>

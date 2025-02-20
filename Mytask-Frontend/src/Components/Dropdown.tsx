@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { isOpen } from "../Atoms/Atoms";
-import { Info } from "../Pages/Landing";
+import Info from "../Pages/Landing";
 
 export function Dropdown({del}:{del: () => void}) {
   // State management for dropdown and modals

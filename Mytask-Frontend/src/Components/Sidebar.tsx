@@ -83,7 +83,7 @@ export const Sidebar: React.FC = () => {
             icon={Home}
             label="Dashboard"
             active
-            fn={() => navigate('/')}
+            fn={() => navigate('/dashboard')}
           />
           <SidebarItem
             icon={Calendar}

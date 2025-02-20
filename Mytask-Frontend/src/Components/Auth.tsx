@@ -92,7 +92,7 @@ export function Auth({ type }: { type: "signup" | "signin" }) {
         postInputs
       );
       setid(res.data.id);
-      navigate("/");
+      navigate("/dashboard");
     } catch (e) {
       alert("Error while signing in");
       console.log(e);

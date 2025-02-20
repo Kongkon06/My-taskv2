@@ -5,7 +5,7 @@ import Dashboard from '../assets/My_task Dashboard.png';
 import Analytics from '../assets/Analytics.png';
 import Planner from '../assets/Task Planner.png';
 
-export function Info() {
+export function Landing() {
   const navigate = useNavigate();
   const [text, setText] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -404,4 +404,4 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-export default Info;
+export default Landing;

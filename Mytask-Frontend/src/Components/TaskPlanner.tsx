@@ -175,6 +175,7 @@ const TaskPlanner = () => {
   );
 
   const addNode = useCallback(() => {
+    setIsCreating(true);
     const newNode: Node = {
       id: `${nodes.length + 1}-${Date.now()}`,
       type: 'gradientCard',
@@ -184,7 +185,7 @@ const TaskPlanner = () => {
         y: Math.random() * 300,
       }
     };
-    setNodes((nds) => [...nds, newNode]);
+    setNodes((nds) => [...nds, newNode])
   }, [nodes, setNodes]);
 
   return (

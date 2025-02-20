@@ -32,16 +32,13 @@ export default function (){
         <Todo
           key={task.id}
           name={task.name}
-          id={task.id}
-          status={task.status}
-          fn={() => {}}
         />))}
             </div>
           </CardContent>
         </Card>
       )
 }
-function Todo({ id, name, fn}:{id:number, name:string, fn:()=>void, status:boolean}){
+function Todo({ name}:{ name:string}){
     return <div className={`relative border border-black font-dm-sans rounded-md font-semibold text-white p-2 w-full h-auto`}>
       <div className="absolute inset-0 overflow-hidden">
         <GradientCard/>
@@ -49,7 +46,7 @@ function Todo({ id, name, fn}:{id:number, name:string, fn:()=>void, status:boole
       <div className="relativeblur-xl"></div>
       <div className="relative sm:col-span-1 hidden sm:block">
       <div className="flex justify-center items-center">
-        <Hook fn={fn} name={name} id={id}/>
+        <Hook name={name}/>
       </div>
     </div>
     </div>

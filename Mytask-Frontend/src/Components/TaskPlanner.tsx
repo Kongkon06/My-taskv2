@@ -22,25 +22,10 @@ import { childatom, parentid, todoatom } from '@/Atoms/Atoms';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 
-const GradientCardNode = ({ data }: NodeProps) => {
+const SvG = () => {
   return (
-    <div className="relative pl-4 min-w-[200px]">
-      {/* Add source handle at the top */}
-      <Handle
-        type="source"
-        position={Position.Top}
-        className="w-2 h-2 bg-blue-500"
-      />
-      
-      {/* Add target handle at the bottom */}
-      <Handle
-        type="target"
-        position={Position.Bottom}
-        className="w-2 h-2 bg-blue-500"
-      />
-
-      <svg 
-        className="absolute blur-lg w-full top-0 left-0 -z-10" 
+    <svg 
+        className="absolute blur-lg w-full top-0 left-0 z-10" 
         style={{ 
           height: '150%',
           minHeight: '400px'
@@ -83,17 +68,29 @@ const GradientCardNode = ({ data }: NodeProps) => {
           </linearGradient>
         </defs>
       </svg>
-      <div className='flex h-full justify-between z-10 relative'>
-      <div className="text-white my-2 font-kubo ">
-        {data.label}
-      </div>
-      <div className='h-full w-5 flex my-2 justify-center bg-green-600'>
-        <Info className='w-3 stroke-black'/>
-      </div>
+  );
+};
+
+
+const GradientCardNode = ({ data }: NodeProps) => {
+  return (
+    <div className="relative p-4 min-w-[200px] rounded-lg overflow-hidden shadow-lg bg-black border border-gray-800">
+      <SvG />
+      {/* Top source handle */}
+      <Handle type="source" position={Position.Top} className="w-2 h-2 bg-blue-500 z-10" />
+      {/* Bottom target handle */}
+      <Handle type="target" position={Position.Bottom} className="w-2 h-2 bg-blue-500 z-10" />
+      
+      <div className="relative flex justify-between gap-12 items-center z-10">
+        <div className="text-white font-kubo">{data.label}</div>
+        <div className={`h-6 w-6 flex items-center justify-center ${data.hasChild ? "bg-blue-600" : "bg-green-600"} rounded-full`}>
+          <Info className="w-4 h-4 stroke-black" />
+        </div>
       </div>
     </div>
   );
 };
+
 
 const nodeTypes = {
   gradientCard: GradientCardNode
@@ -124,9 +121,9 @@ const TaskPlanner = () => {
         ...newChildren.map((data: any) => ({
           id: data.id.toString(),
           type: 'gradientCard',
-          data: { label: data.name },
+          data: { label: data.name, hasChild:(data.subTodos.length != 0 ? true : false) },
           position: { x: Math.random() * 600, y: Math.random() * 400 },
-          className:'absolute overflow-hidden'
+          className:'absolute'
         })),
       ]);
   
@@ -154,9 +151,9 @@ const TaskPlanner = () => {
           ...prevNodes,{
             id: '1',
             type: 'gradientCard',
-            data: { label: task.name },
+            data: { label: task.name,hasChild:true },
             position:  { x: 450, y: 0 },
-            className:'absolute overflow-hidden'
+            className:'absolute '
           },
         ]);
       }
@@ -175,18 +172,28 @@ const TaskPlanner = () => {
   );
 
   const addNode = useCallback(() => {
+    if (!taskName.trim()) return; // Prevent empty task names
+    
     setIsCreating(true);
+    
+    const newNodeId = `${Date.now()}`; // Generate a unique ID
     const newNode: Node = {
-      id: `${nodes.length + 1}-${Date.now()}`,
+      id: newNodeId,
       type: 'gradientCard',
-      data: { label: taskName },
+      data: { label: taskName, hasChild: false },
       position: {
         x: Math.random() * 500,
         y: Math.random() * 300,
-      }
+      },
     };
-    setNodes((nds) => [...nds, newNode])
-  }, [nodes, setNodes]);
+  
+    setNodes((nds) => [...nds, newNode]);
+  
+  
+    setIsCreating(false);
+    setTaskName(""); // Reset input field
+  }, [nodes, setNodes, setEdges, taskName]);
+  
 
   return (
     <div className="h-screen w-full bg-slate-950 text-white p-4">
@@ -210,7 +217,7 @@ const TaskPlanner = () => {
             </div>
             <Button
               onClick={addNode}
-              disabled={isCreating || !taskName.trim()}
+              disabled={isCreating}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 transition-colors"
             >
               {isCreating ? (

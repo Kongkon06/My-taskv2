@@ -5,6 +5,8 @@ import TaskProgressCircle from "@/Components/TaskCircle"
 import Goals from "@/Components/GoalsList";
 import WeeklyProgress from "@/Components/WeeklyProgress";
 import { Appbar } from "@/Components/Appbar"
+import TaskCreationOverlay from "@/Components/TaskCreation";
+import { useState } from "react";
 const GradientCard = () => (
   <svg 
     className="absolute top-0 left-0 w-full" 
@@ -53,6 +55,10 @@ const GradientCard = () => (
 );
 
 export function Home() {
+  const [isTaskOverlayOpen, setIsTaskOverlayOpen] = useState(false);
+  const handleTaskSubmit = ()=>{
+    alert("task added")
+  }
   return (
     <div className="flex h-screen bg-gray-900">
       <Sidebar />
@@ -62,7 +68,7 @@ export function Home() {
           <div className="grid grid-cols-8 gap-6">
             {/* First row */}
             <div className="col-span-2 space-y-4 h-full">
-              <button className="relative w-full h-full min-h-[200px] overflow-hidden rounded-lg group">
+              <button onClick={()=>setIsTaskOverlayOpen(true)} className="relative w-full h-full min-h-[200px] overflow-hidden rounded-lg group">
                 <GradientCard />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 transition-transform duration-200 group-hover:scale-105">
                   <PlusCircle className="w-8 h-8 mb-2" />
@@ -86,6 +92,11 @@ export function Home() {
           </div>
         </main>
       </div>
+      <TaskCreationOverlay
+        isOpen={isTaskOverlayOpen}
+        onClose={() => setIsTaskOverlayOpen(false)}
+        onSubmit={handleTaskSubmit}
+      />
     </div>
   );
 }

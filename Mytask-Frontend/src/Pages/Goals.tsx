@@ -22,11 +22,11 @@ export const GoalsList = () => {
     })
   },[todoatom,userid]);
 
-  const fetch = (id: number, status: boolean) => {
+  const fetch = (name:string,id: number, status: boolean) => {
     todo.map((task:any)=>{
       if(task.subTodos.length!=0){
         setParentid(id);
-        navigte('/area');
+        navigte(`/plans/${name}`);
       }
     })
     console.log('fetch', id, status)};
@@ -43,7 +43,7 @@ export const GoalsList = () => {
               name={task.name}
               id={task.id}
               status={task.status}
-              fn={() => fetch(task.id, task.status)}
+              fn={() => fetch(task.name,task.id, task.status)}
             />
           ))}
         </div>

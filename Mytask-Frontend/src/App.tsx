@@ -22,7 +22,7 @@ function App() {
       <Route path='/completed' element={<Completed/>}/>
       <Route path='/calendar' element={<CalendarView/>}/>
       <Route path='/dashboard' element={<Home/>}/>
-      <Route path='/area' element={<PlanView/>}/>
+      <Route path='/plans/:id' element={<PlanView/>}/>
       <Route path='/' element={<Landing/>}/>
     </Routes>
     </BrowserRouter>

@@ -21,6 +21,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { childatom, parentid, todoatom } from '@/Atoms/Atoms';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const SvG = () => {
   return (
@@ -72,7 +73,9 @@ const SvG = () => {
 };
 
 
-const GradientCardNode = ({ data }: NodeProps) => {
+const GradientCardNode = ({ data,id }: NodeProps) => {
+  const setParentId = useSetRecoilState(parentid);
+  const navigate = useNavigate();
   return (
     <div className="relative p-4 min-w-[200px] rounded-lg overflow-hidden shadow-lg bg-black border border-gray-800">
       <SvG />
@@ -82,7 +85,7 @@ const GradientCardNode = ({ data }: NodeProps) => {
       <Handle type="target" position={Position.Bottom} className="w-2 h-2 bg-blue-500 z-10" />
       
       <div className="relative flex justify-between gap-12 items-center z-10">
-        <div className="text-white font-kubo">{data.label}</div>
+        <div role='button' onClick={()=>{setParentId(Number(id));navigate(`/plans/${data.label}`)}} className="text-white font-kubo">{data.label}</div>
         <div className={`h-6 w-6 flex items-center justify-center ${data.hasChild ? "bg-blue-600" : "bg-green-600"} rounded-full`}>
           <Info className="w-4 h-4 stroke-black" />
         </div>
@@ -112,7 +115,6 @@ const TaskPlanner = () => {
       const response = await axios.post(`${DATABASE_URL}/api/v2/Todos/Child`, {
         parentId: userid,
       });
-      console.log(userid);
       const newChildren = response.data.Todos;
       setchild(newChildren);
   
@@ -131,7 +133,7 @@ const TaskPlanner = () => {
         ...prevEdges,
         ...newChildren.map((data: any) => ({
           id: `e1-${data.id}`,
-          target: "1",
+          target: userid.toString(),
           source: data.id.toString(),
           type: 'default',
           animated: true,
@@ -144,14 +146,13 @@ const TaskPlanner = () => {
   }
   
   useEffect(() => {
-    console.log(parentTask);
     parentTask.map((task)=>{
       if(task.id == userid){
         setNodes((prevNodes) => [
           ...prevNodes,{
-            id: '1',
+            id: userid.toString(),
             type: 'gradientCard',
-            data: { label: task.name,hasChild:true },
+            data: { label: task.name,hasChild:(task.subTodos.length != 0 ? true : false) },
             position:  { x: 450, y: 0 },
             className:'absolute '
           },
@@ -159,7 +160,9 @@ const TaskPlanner = () => {
       }
     })
     fetchNodes();
-  }, [])
+    console.log(nodes);
+    console.log(edges);
+  }, [userid])
 
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds) => addEdge({ 

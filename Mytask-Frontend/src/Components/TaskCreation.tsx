@@ -22,8 +22,7 @@ const TaskCreationOverlay = ({ isOpen, onClose, onSubmit }:any) => {
     title: '',
     description: '',
     dueDate: '',
-    priority: 'medium',
-    category: 'work'
+    category: 'Todo'
   });
 
   const handleChange = (field:any, value:any) => {
@@ -41,8 +40,7 @@ const TaskCreationOverlay = ({ isOpen, onClose, onSubmit }:any) => {
       title: '',
       description: '',
       dueDate: '',
-      priority: 'medium',
-      category: 'work'
+      category: 'Todo'
     });
   };
 
@@ -75,21 +73,6 @@ const TaskCreationOverlay = ({ isOpen, onClose, onSubmit }:any) => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Select
-                  value={taskData.priority}
-                  onValueChange={(value) => handleChange('priority', value)}
-                >
-                  <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white">
-                    <SelectValue placeholder="Priority" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-700">
-                    <SelectItem value="low">Low Priority</SelectItem>
-                    <SelectItem value="medium">Medium Priority</SelectItem>
-                    <SelectItem value="high">High Priority</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
 
               <div>
                 <Select
@@ -99,17 +82,12 @@ const TaskCreationOverlay = ({ isOpen, onClose, onSubmit }:any) => {
                   <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-700">
-                    <SelectItem value="work">Work</SelectItem>
-                    <SelectItem value="personal">Personal</SelectItem>
-                    <SelectItem value="shopping">Shopping</SelectItem>
-                    <SelectItem value="health">Health</SelectItem>
+                  <SelectContent className="bg-gray-800 text-slate-200 border-gray-700">
+                    <SelectItem value="Todo">Goals</SelectItem>
+                    <SelectItem value="Daily">Daily</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-
-            <div>
               <div className="relative">
                 <Input
                   type="datetime-local"
@@ -132,7 +110,7 @@ const TaskCreationOverlay = ({ isOpen, onClose, onSubmit }:any) => {
               type="button"
               onClick={onClose}
               variant="outline"
-              className="border-gray-700 text-gray-300 hover:bg-gray-800"
+              className="border-gray-700 text-gray-700 hover:text-slate-400 hover:bg-gray-900"
             >
               Cancel
             </Button>

@@ -1,26 +1,14 @@
 import { parentid, todoatom } from '@/Atoms/Atoms';
 import Sidebar from '@/Components/Sidebar';
-import { DATABASE_URL } from '@/config';
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Todo } from '@/Components/Todo';
 import { useNavigate } from 'react-router-dom';
 import { Appbar } from '@/Components/Appbar';
 
 export const GoalsList = () => {
-  const userid = useRecoilValue(parentid);
-  const [todo,settodo] = useRecoilState(todoatom);
+  const todo = useRecoilValue(todoatom);
   const setParentid = useSetRecoilState(parentid);
   const navigte = useNavigate();
-  useEffect(()=>{
-    axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
-        userId:userid
-    }).then(response=>{
-        settodo(response.data.Todos);
-        console.log(response.data.Todos);
-    })
-  },[todoatom,userid]);
 
   const fetch = (name:string,id: number, status: boolean) => {
     todo.map((task:any)=>{

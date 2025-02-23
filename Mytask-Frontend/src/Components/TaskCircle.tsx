@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader} from './ui/card';
 import { GradientCard } from './FancyCard';
+import { useRecoilValue } from 'recoil';
+import { dailyatom } from '@/Atoms/Atoms';
 
 const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
   // Convert progress to normalized value
   const normalizedProgress = Math.min(Math.max(progress, 0), 100);
-  
+  const daily = useRecoilValue(dailyatom);
   return (
-    <Card className='w-full relative overflow-hidden border-none max-w-sm mx-auto bg-slate-900'>\
+    daily.length != 0 ? <Card className='w-full relative overflow-hidden border-none max-w-sm mx-auto bg-slate-900'>\
     <div className='absolute inset-0'>
       <GradientCard/>
     </div>
@@ -108,7 +110,7 @@ const FluidProgressCircle = ({ progress = 62.5, total = 8, completed = 5 }) => {
       </div>
     </div>
     </CardContent>
-    </Card>
+    </Card>:<div></div>
   );
 };
 

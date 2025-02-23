@@ -160,8 +160,6 @@ const TaskPlanner = () => {
       }
     })
     fetchNodes();
-    console.log(nodes);
-    console.log(edges);
   }, [userid])
 
   const onConnect = useCallback(

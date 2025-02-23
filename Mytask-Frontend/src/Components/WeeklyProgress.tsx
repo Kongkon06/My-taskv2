@@ -1,11 +1,12 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 import { GradientCard } from './FancyCard';
+import { useRecoilValue } from 'recoil';
+import { todoatom } from '@/Atoms/Atoms';
 
 const WeeklyProgress = () => {
   const days = ["Mon", "Tues", "Wed", "Thurs", "Fri","Sat","Sun"];
-  const goals = ["Goal 1", "Goal 2", "Goal 3", "Goal 4"];
-  
+  const goals = useRecoilValue(todoatom);
   // Generate random status for demonstration
   const getRandomStatus = () => {
     return Math.random() > 0.5 ? 'completed' : 'not-started';
@@ -15,8 +16,7 @@ const WeeklyProgress = () => {
     return status === 'completed' ? 'bg-indigo-700' : 'bg-gray-300';
   };
 
-  return (
-    <Card className="w-full relative overflow-hidden bg-slate-900 border-none mx-auto">
+  return ( goals.length !=0 ? <Card className="w-full h-full relative overflow-hidden bg-slate-900 border-none mx-auto">
       <div className='absolute inset-0'>
         <GradientCard/>
       </div>
@@ -34,7 +34,7 @@ const WeeklyProgress = () => {
           
           {goals.map((goal, goalIndex) => (
             <React.Fragment key={goalIndex}>
-              <div className="font-medium text-sm text-slate-300">{goal}</div>
+              <div className="font-medium text-sm text-slate-300">{goal.name}</div>
               {days.map((_, dayIndex) => {
                 const status = getRandomStatus();
                 return (
@@ -67,7 +67,7 @@ const WeeklyProgress = () => {
         </div>
       </CardContent>
     </Card>
-  );
+  :<div></div>);
 };
 
 export default WeeklyProgress;

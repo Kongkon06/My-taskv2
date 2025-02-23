@@ -6,7 +6,11 @@ import Goals from "@/Components/GoalsList";
 import WeeklyProgress from "@/Components/WeeklyProgress";
 import { Appbar } from "@/Components/Appbar"
 import TaskCreationOverlay from "@/Components/TaskCreation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { DATABASE_URL } from "@/config";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { dailyatom, todoatom, userAtom } from "@/Atoms/Atoms";
 const GradientCard = () => (
   <svg 
     className="absolute top-0 left-0 w-full" 
@@ -54,11 +58,51 @@ const GradientCard = () => (
   </svg>
 );
 
+interface CreateTask{
+  title:string,
+  category:string,
+  description:string,
+  userId:string,
+}
 export function Home() {
   const [isTaskOverlayOpen, setIsTaskOverlayOpen] = useState(false);
-  const handleTaskSubmit = ()=>{
-    alert("task added")
+  const userId = useRecoilValue(userAtom);
+  const setParent = useSetRecoilState(todoatom);
+  const setDaily = useSetRecoilState(dailyatom);
+  const handleTaskSubmit = async (taskData: CreateTask) => { 
+    if(taskData.category == 'Todo'){
+      await axios.post(`${DATABASE_URL}/api/v2/${taskData.category}`,{
+        name:taskData.title,
+        description:taskData.description,
+        userId:userId
+      })
+    }else{
+      await axios.post(`${DATABASE_URL}/api/v2/${taskData.category}/create`,{
+        title:taskData.title,
+        description:taskData.description,
+        userId:userId
+      })
+    }
   }
+  const fetchParent = async () =>{
+    const res =await axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
+      id:Number(userId)
+    })
+    console.log(res.data);
+    setParent(res.data.Todos);
+  }
+
+  const fetchChild = async ()=>{
+    const res = await axios.post(`${DATABASE_URL}/api/v2/Daily`,{
+      userId:Number(userId)
+    });
+    console.log(res.data);
+    setDaily(res.data);
+  }
+  useEffect(()=>{
+    fetchChild();
+    fetchParent();
+  },[])
   return (
     <div className="flex h-screen bg-gray-900">
       <Sidebar />
@@ -67,7 +111,7 @@ export function Home() {
         <main className="flex-1 mt-16 p-6 overflow-auto">
           <div className="grid grid-cols-8 gap-6">
             {/* First row */}
-            <div className="col-span-2 space-y-4 h-full">
+            <div className="col-span-2 space-y-4 min-h-64">
               <button onClick={()=>setIsTaskOverlayOpen(true)} className="relative w-full h-full min-h-[200px] overflow-hidden rounded-lg group">
                 <GradientCard />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 transition-transform duration-200 group-hover:scale-105">
@@ -76,7 +120,7 @@ export function Home() {
                 </div>
               </button>
             </div>
-            <div className="col-span-4">
+            <div className="col-span-4 min-h-64 h-full">
               <WeeklyProgress/>
             </div>
             <div className="col-span-2 flex justify-center items-center">
@@ -86,7 +130,7 @@ export function Home() {
             <div className="col-span-3">
               <Goals />
             </div>
-            <div className="col-span-3 h-64">
+            <div className="col-span-3 h-full">
               <TaskList />
             </div>
           </div>

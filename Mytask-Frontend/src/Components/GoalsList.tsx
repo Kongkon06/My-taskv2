@@ -1,43 +1,30 @@
-import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { DATABASE_URL } from "@/config";
-import axios from "axios";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { parentid, todoatom, userAtom } from "@/Atoms/Atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { parentid, todoatom } from "@/Atoms/Atoms";
 import { GradientCard } from "@/Components/FancyCard";
 import Hook from "./Hook";
 import { useNavigate } from "react-router-dom";
 
 export default function (){
-    const [goals,setGoals]= useRecoilState(todoatom);
-    const userId = useRecoilValue(userAtom);
-    useEffect(()=>{
-      console.log(userId);
-        axios.post(`${DATABASE_URL}/api/v2/Todos/Parent`,{
-            userId:userId
-        }).then(response=>{
-            setGoals(response.data.Todos);
-        })
-    },[]);
-    return (
-        <Card className="min-h-64 relative overflow-hidden text-white border bg-slate-900 border-none">
-          <div className="absolute inset-0">
-          <GradientCard/>
-          </div>
-          <CardHeader>
-            <CardTitle className="relative font-kubo">Goals</CardTitle>
-          </CardHeader>
-          <CardContent className="relative">
-            <div className="grid grid-cols-2 gap-4">
-            {goals.map((task) => (
-        <Todo
-          key={task.id}
-          name={task.name}
-          id={task.id}
-        />))}
-            </div>
-          </CardContent>
-        </Card>
+    const goals= useRecoilValue(todoatom);
+    return ( (goals.length !=0 ?  <Card className="min-h-64 relative overflow-hidden text-white border bg-slate-900 border-none">
+      <div className="absolute inset-0">
+      <GradientCard/>
+      </div>
+      <CardHeader>
+        <CardTitle className="relative font-kubo">Goals</CardTitle>
+      </CardHeader>
+      <CardContent className="relative">
+        <div className="grid grid-cols-2 gap-4">
+        {goals.map((task) => (
+    <Todo
+      key={task.id}
+      name={task.name}
+      id={task.id}
+    />))}
+        </div>
+      </CardContent>
+    </Card>:<div></div>)
       )
 }
 function Todo({id, name}:{ id:number,name:string}){

@@ -1,22 +1,16 @@
-import { parentid, todoatom } from '@/Atoms/Atoms';
+import { todoatom } from '@/Atoms/Atoms';
 import Sidebar from '@/Components/Sidebar';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { Todo } from '@/Components/Todo';
 import { useNavigate } from 'react-router-dom';
 import { Appbar } from '@/Components/Appbar';
 
 export const GoalsList = () => {
   const todo = useRecoilValue(todoatom);
-  const setParentid = useSetRecoilState(parentid);
   const navigte = useNavigate();
 
   const fetch = (name:string,id: number, status: boolean) => {
-    todo.map((task:any)=>{
-      if(task.subTodos.length!=0){
-        setParentid(id);
         navigte(`/plans/${name}`);
-      }
-    })
     console.log('fetch', id, status)};
 
   return (

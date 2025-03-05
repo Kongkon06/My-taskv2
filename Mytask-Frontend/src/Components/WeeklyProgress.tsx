@@ -33,8 +33,10 @@ const WeeklyProgress = () => {
           ))}
           
           {goals.map((goal, goalIndex) => (
-            <React.Fragment key={goalIndex}>
-              <div className="font-medium text-sm text-slate-300">{goal.name}</div>
+            <React.Fragment key={goalIndex}>    
+            <div className="font-medium text-sm text-slate-300">
+              {goal.name.length > 10 ? goal.name.slice(0, 10) + "..." : goal.name}
+            </div>
               {days.map((_, dayIndex) => {
                 const status = getRandomStatus();
                 return (

@@ -53,16 +53,17 @@ export const CalendarView: React.FC = () => {
     setEvents(mappedEvents);
   }, []);
 
-  const eventStyleGetter = (event: any) => ({
-    style: {
-      backgroundColor: event.completed ? "hsl(142.1 76.2% 36.3%)" : "hsl(215.4 16.3% 46.9%)",
-      color: "hsl(210 40% 98%)",
-      border: "none",
-      borderRadius: "4px",
-      padding: "2px 6px",
-      fontSize: "0.875rem",
-    },
-  });
+
+const eventStyleGetter = (event: any) => ({
+  style: {
+    backgroundColor: event.completed ? "hsl(142.1 76.2% 36.3%)" : "hsl(0, 76.2%, 40%)", // Darker red
+    color: "hsl(210 40% 98%)",
+    border: "none",
+    borderRadius: "4px",
+    padding: "2px 6px",
+    fontSize: "0.875rem",
+  },
+});
 
   return (
     <div className="flex h-screen bg-slate-950">

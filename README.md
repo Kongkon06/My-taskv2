@@ -1,12 +1,12 @@
 # My-Tasks 🚀
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-lightgrey)
-![Dependencies](https://img.shields.io/badge/dependencies-expo%20%7C%20react--native%20%7C%20typescript-success)
+![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20Android%20%7C%20iOS-lightgrey)
+![Dependencies](https://img.shields.io/badge/dependencies-react%20%7C%20typescript%20%7C%20vite-success)
 
 The ultimate productivity companion for modern task management and goal achievement.
 
-![My-Tasks Dashboard Preview](./Mytask-Frontend/src/assets/My_task Dashboard.png)
+![My-Tasks Dashboard Preview](./Mytask-Frontend/src/assets/My_task_Dashboard.png)
 
 ## 🌟 Features
 
@@ -42,21 +42,23 @@ The ultimate productivity companion for modern task management and goal achievem
 # Clone repository
 git clone https://github.com/Kongkon06/My-taskv2.git
 
+# Navigate to project
+cd My-taskv2
+
 # Install dependencies
-cd my-tasks
 npm install
 
 # Start development server
 npm run dev
 ```
 
-[![Get Started Button](./assets/get-started-button.png)](https://my-tasks.app)
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20Preview-green)](https://my-taskv2.vercel.app/)
 
 ## 📸 App Preview
 
 | Task List View | Analytics Dashboard | Task Mapping |
 |----------------|---------------------|--------------|
-| ![Task List](./assets/task-list.png) | ![Analytics](./assets/analytics.png) | ![Task Map](./assets/task-map.png) |
+| ![Task List](./Mytask-Frontend/src/assets/task-list.png) | ![Analytics](./Mytask-Frontend/src/assets/analytics.png) | ![Task Map](./Mytask-Frontend/src/assets/task-map.png) |
 
 ## 📚 Documentation
 
@@ -68,12 +70,14 @@ npm run dev
 
 ### Architecture
 ```plaintext
-src/
-├── components/  # UI Components
-├── screens/     # App Views
-├── utils/       # Helper Functions
-├── types/       # TypeScript Definitions
-└── assets/      # Media Resources
+Mytask-Frontend/
+├── public/          # Static assets
+├── src/
+│   ├── components/  # UI Components
+│   ├── screens/     # App Views
+│   ├── utils/       # Helper Functions
+│   ├── types/       # TypeScript Definitions
+│   └── assets/      # Media Resources
 ```
 
 ## 🤝 Contributing
@@ -87,37 +91,34 @@ We welcome contributions! Please follow these steps:
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
 
 ## ✉️ Contact
 
-Project Maintainer: Kongkon Bora - contact@kbora3525@gamil.com 
-Project Link: [https://github.com/your-username/my-tasks](https://my-taskv2.vercel.app/)
+Project Maintainer: **Kongkon Bora**  
+Email: [kbora3525@gmail.com](mailto:kbora3525@gmail.com)  
+Project Link: [https://my-taskv2.vercel.app/](https://my-taskv2.vercel.app/)  
+GitHub Repository: [https://github.com/Kongkon06/My-taskv2](https://github.com/Kongkon06/My-taskv2)
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React Native, TypeScript, Expo
+- **Frontend**: React, TypeScript, Vite
 - **State Management**: Redux Toolkit
-- **Charts**: Victory Native
-- **Navigation**: React Navigation
-- **Styling**: Styled Components
+- **Charts**: Recharts
+- **Styling**: CSS Modules
+- **Build Tool**: Vite
+- **Deployment**: Vercel
 
 ## 🌈 Roadmap
 
 - [x] Phase 1: Core Task Management (Q1 2024)
-- [ ] Phase 2: Advanced Analytics (Q2 2024)
-- [ ] Phase 3: Team Collaboration (Q3 2024)
-- [ ] Phase 4: AI-Powered Suggestions (Q4 2024)
+- [x] Phase 2: Basic Analytics (Q2 2024)
+- [ ] Phase 3: Advanced Task Mapping (Q3 2024)
+- [ ] Phase 4: Mobile App Development (Q4 2024)
 
 ---
 
 **Transform your productivity today!** 🌟  
 *"Organize Your World, Achieve Your Goals"* ✨
-```
-3. Add real screenshots
-4. Update contact information
-5. Customize the roadmap and tech stack details
-
-Would you like me to create specific technical documentation for any of the components or help with installation/setup instructions?

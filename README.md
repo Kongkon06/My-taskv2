@@ -6,7 +6,7 @@
 
 The ultimate productivity companion for modern task management and goal achievement.
 
-![My-Tasks Preview]([./Mytask-Frontend/src/assets/My_task_Dashboard.png](https://my-taskv2.vercel.app/))
+![My-Tasks Preview]((https://my-taskv2.vercel.app/))
 
 ## 🌟 Features
 

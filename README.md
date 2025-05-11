@@ -91,8 +91,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## ✉️ Contact
 
-Project Maintainer: [Your Name] - contact@my-tasks.app  
-Project Link: [https://github.com/your-username/my-tasks](https://github.com/your-username/my-tasks)
+Project Maintainer: Kongkon Bora - contact@kbora3525@gamil.com 
+Project Link: [https://github.com/your-username/my-tasks](https://my-taskv2.vercel.app/)
 
 ---
 
@@ -116,22 +116,6 @@ Project Link: [https://github.com/your-username/my-tasks](https://github.com/you
 **Transform your productivity today!** 🌟  
 *"Organize Your World, Achieve Your Goals"* ✨
 ```
-
-This README includes:
-
-1. Eye-catching badges and headers
-2. Clear feature breakdown
-3. Visual previews
-4. Easy setup instructions
-5. Technical documentation
-6. Contribution guidelines
-7. Development roadmap
-8. Technology stack details
-9. Professional contact information
-
-To use this README:
-1. Create an `assets/` directory for images
-2. Replace placeholder URLs with your actual project links
 3. Add real screenshots
 4. Update contact information
 5. Customize the roadmap and tech stack details

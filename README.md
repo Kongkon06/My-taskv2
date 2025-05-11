@@ -6,7 +6,7 @@
 
 The ultimate productivity companion for modern task management and goal achievement.
 
-![My-Tasks Dashboard Preview](./assets/dashboard-preview.png)
+![My-Tasks Dashboard Preview](./Mytask-Frontend/src/assets/My_task Dashboard.png)
 
 ## 🌟 Features
 
